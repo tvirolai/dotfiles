@@ -9,7 +9,7 @@
 (add-to-list 'package-archives
              '("tromey" . "http://tromey.com/elpa/") t)
 (add-to-list 'package-archives
-             '("melpa" . "http://melpa.org/packages/") t)
+             '("melpa" . "http://melpa.milkbox.net/packages/") t)
 
 ;; Load and activate emacs packages. Do this first so that the
 ;; packages are loaded before you start trying to modify them.
@@ -21,6 +21,8 @@
 ;; makes them available for download.
 (when (not package-archive-contents)
   (package-refresh-contents))
+
+(setq evil-want-C-u-scroll t)
 
 ;; The packages you want installed. You can also install these
 ;; manually with M-x package-install
@@ -101,6 +103,14 @@
 ;; Customization
 ;;;;
 
+;; Don't use tabs for indentation
+(setq-default indent-tabs-mode nil)
+(setq evil-shift-width 2)
+
+(setq tab-width 2) ; or any other preferred value
+(defvaralias 'c-basic-offset 'tab-width)
+(defvaralias 'cperl-indent-level 'tab-width)
+
 ;; Add a directory to our load path so that when you `load` things
 ;; below, Emacs knows where to look for the corresponding file.
 (add-to-list 'load-path "~/.emacs.d/customizations")
@@ -154,6 +164,13 @@
 
 ;;(electric-indent-mode 1)
 
+(require 'nlinum-relative)
+(nlinum-relative-setup-evil)                    ;; setup for evil
+(add-hook 'prog-mode-hook 'nlinum-relative-mode)
+(setq nlinum-relative-redisplay-delay 0)      ;; delay
+(setq nlinum-relative-current-symbol "->")      ;; or "" for display current line number
+(setq nlinum-relative-offset 0)   
+
 (add-to-list 'load-path "~/.emacs.d/tern/emacs/")
 (autoload 'tern-mode "tern.el" nil t)
 
@@ -189,6 +206,7 @@
   (setq clean-aindent-is-simple-indent t)
   (define-key global-map (kbd "RET") 'newline-and-indent))
 (add-hook 'after-init-hook 'my-pkg-init)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -198,10 +216,29 @@
  '(coffee-tab-width 2)
  '(custom-safe-themes
  (quote
-  ("a800120841da457aa2f86b98fb9fd8df8ba682cebde033d7dbf8077c1b7d677a" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "721bb3cb432bb6be7c58be27d583814e9c56806c06b4077797074b009f322509" "251348dcb797a6ea63bbfe3be4951728e085ac08eee83def071e4d2e3211acc3" "946e871c780b159c4bb9f580537e5d2f7dba1411143194447604ecbaf01bd90c" default))))
+  ("a800120841da457aa2f86b98fb9fd8df8ba682cebde033d7dbf8077c1b7d677a" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "721bb3cb432bb6be7c58be27d583814e9c56806c06b4077797074b009f322509" "251348dcb797a6ea63bbfe3be4951728e085ac08eee83def071e4d2e3211acc3" "946e871c780b159c4bb9f580537e5d2f7dba1411143194447604ecbaf01bd90c" default)))
+ '(package-selected-packages
+ (quote
+  (markdown-mode js2-mode evil-leader evil-escape changelog-url dash-functional magit web-mode typescript-mode tern tagedit solarized-theme smex smart-tabs-mode smart-mode-line-powerline-theme react-snippets rainbow-delimiters projectile paredit origami nlinum-relative monokai-theme markdown-mode+ linum-relative key-chord jsx-mode jedi ido-ubiquitous exec-path-from-shell evil-surround evil-easymotion ess-mode clojure-mode-extra-font-locking clean-aindent-mode cider autopair airline-themes 4clojure))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+(require 'autopair)
+(autopair-global-mode) ;; enable autopair in all buffers
+
+(require 'package)
+
+(when (< emacs-major-version 24) 
+  (add-to-list 'package-archives 
+               '("gnu" . "http://elpa.gnu.org/packages/"))) 
+(package-initialize) 
+(global-set-key (kbd "C-,") 'prev-window)
+(global-set-key (kbd "C--") 'other-window)
+
+(defun prev-window ()
+  (interactive)
+  (other-window -1))
