@@ -1,0 +1,10 @@
+yhteensä 36K
+drwxrwxr-x  9 tvirolai 4,0K maali  7 15:31 .
+drwxrwxr-x  4 tvirolai 4,0K maali  7 15:31 ..
+drwxrwxr-x  5 tvirolai 4,0K maali  7 14:12 paredit.vim
+drwxrwxr-x  4 tvirolai 4,0K maali  7 15:31 rainbow
+drwxrwxr-x  7 tvirolai 4,0K maali  2 12:42 vim-airline
+drwxrwxr-x  7 tvirolai 4,0K maali  7 15:28 vim-easymotion
+drwxrwxr-x  7 tvirolai 4,0K maali  2 14:27 vim-fireplace
+drwxrwxr-x  5 tvirolai 4,0K maali  2 15:20 vim-tmux-navigator
+drwxrwxr-x 10 tvirolai 4,0K maali  2 12:44 YouCompleteMe

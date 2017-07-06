@@ -1,7 +1,9 @@
 set nocompatible              " be iMproved, required
 
 execute pathogen#infect()
-syntax on
+"syntax on
+syntax enable
+colorscheme monokai
 filetype plugin indent on    " required
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
@@ -42,12 +44,17 @@ set swapfile
 set backupdir=~/.vim-tmp
 set directory=~/.vim-tmp
 
-"let mapleader = "-"
-let g:rainbow_active = 1
+let mapleader = "-"
+"let g:rainbow_active = 1
 
 let g:NumberToggleTrigger="<F3>"
 
-au VimEnter * RainbowToggle
+"au VimEnter * RainbowParenthesesToggle
+"au Syntax * RainbowParenthesesLoadRound
+"au Syntax * RainbowParenthesesLoadSquare
+"au Syntax * RainbowParenthesesLoadBraces
+
+"au VimEnter * RainbowToggle
 :imap kj <Esc>
 
 " Enable the list of buffers
@@ -79,3 +86,9 @@ nmap <leader>bl :ls<CR>
 
 let g:closetag_filenames = "*.xml,*.html,*.xhtml,*.phtml,*.php"
 au FileType xml,html,phtml,php,xhtml,js let b:delimitMate_matchpairs = "(:),[:],{:}"
+
+autocmd Filetype javascript setlocal ts=4 sw=4 sts=0 noexpandtab
+
+let g:vimwiki_list = [{'path':'~/Dropbox/Työtekstit/vimwiki'}]
+
+let g:javascript_plugin_jsdoc = 1

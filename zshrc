@@ -1,5 +1,5 @@
 # Path to your oh-my-zsh installation.
-  export ZSH=/home/tuomo/.oh-my-zsh
+export ZSH=/home/tvirolai/.oh-my-zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -58,6 +58,10 @@ plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
+source ~/xinput.sh
+
+#source ~/.profile
+
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
@@ -93,9 +97,9 @@ source ~/.config/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 autoload -U promptinit && promptinit
 
 export TERM="xterm-256color"
-source /home/tuomo/.config/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /home/tvirolai/.config/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-export NVM_DIR="/home/tuomo/.nvm"
+export NVM_DIR="/home/tvirolai/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
 # Declare the variable
@@ -109,3 +113,4 @@ ZSH_HIGHLIGHT_STYLES[path]='fg=cyan'
 
 # redefine prompt_context for hiding user@hostname
 prompt_context () { }
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
