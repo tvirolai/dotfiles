@@ -1,21 +1,29 @@
 set nocompatible              " be iMproved, required
 
-execute pathogen#infect()
-"syntax on
+" Plugins are defined here using plug-vim
+call plug#begin('~/.config/nvim/bundle')
+
+Plug 'kien/ctrlp.vim'
+Plug 'terryma/vim-smooth-scroll'
+Plug 'matze/vim-move'
+Plug 'vim-airline/vim-airline'
+Plug 'easymotion/vim-easymotion'
+Plug 'justinmk/vim-sneak'
+Plug 'tpope/vim-fireplace'
+Plug 'jeffkreeftmeijer/vim-numbertoggle'
+Plug 'tpope/vim-repeat'
+Plug 'guns/vim-sexp'
+Plug 'tpope/vim-sexp-mappings-for-regular-people'
+Plug 'tpope/vim-surround'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'ervandew/supertab'
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+
+call plug#end()
+
 syntax enable
 colorscheme monokai
 filetype plugin indent on    " required
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
-"
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
 
 set encoding=utf-8
 set fileencoding=utf-8
@@ -41,8 +49,27 @@ set pastetoggle=<F2>
 set mouse=
 set backup
 set swapfile
-set backupdir=~/.vim-tmp
-set directory=~/.vim-tmp
+
+" Save temporary/backup files not in the local directory, but in your ~/.vim
+" directory, to keep them out of git repos. 
+" But first mkdir backup, swap, and undo first to make this work
+call system('mkdir ~/.vim')
+call system('mkdir ~/.vim/backup')
+call system('mkdir ~/.vim/swap')
+set backupdir=~/.vim/backup//
+set directory=~/.vim/swap//
+
+" Keep undo history across sessions by storing it in a file
+if has('persistent_undo')
+    call system('mkdir ~/.vim/undo')
+    set undodir=~/.vim/undo//
+    set undofile
+    set undolevels=1000
+    set undoreload=10000
+endif
+
+"set backupdir=~/.vim-tmp
+"set directory=~/.vim-tmp
 
 let mapleader = "-"
 "let g:rainbow_active = 1
@@ -92,3 +119,11 @@ autocmd Filetype javascript setlocal ts=4 sw=4 sts=0 noexpandtab
 let g:vimwiki_list = [{'path':'~/Dropbox/Työtekstit/vimwiki'}]
 
 let g:javascript_plugin_jsdoc = 1
+set wildignore+=*/node_modules/*     " MacOSX/Linux
+
+let g:move_key_modifier = 'C'
+
+noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
+noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
+noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
+noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
