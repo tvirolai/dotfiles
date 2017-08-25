@@ -4,6 +4,7 @@ set nocompatible              " be iMproved, required
 call plug#begin('~/.config/nvim/bundle')
 
 Plug 'kien/ctrlp.vim'
+Plug 'alvan/vim-closetag'
 Plug 'tpope/vim-commentary'
 Plug 'terryma/vim-smooth-scroll'
 Plug 'matze/vim-move'
