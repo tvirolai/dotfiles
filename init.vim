@@ -4,20 +4,21 @@ set nocompatible              " be iMproved, required
 call plug#begin('~/.config/nvim/bundle')
 
 Plug 'kien/ctrlp.vim'
+Plug 'tpope/vim-commentary'
 Plug 'terryma/vim-smooth-scroll'
 Plug 'matze/vim-move'
 Plug 'vim-airline/vim-airline'
 Plug 'easymotion/vim-easymotion'
 Plug 'justinmk/vim-sneak'
-Plug 'tpope/vim-fireplace'
+Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
 Plug 'tpope/vim-repeat'
 Plug 'guns/vim-sexp'
 Plug 'tpope/vim-sexp-mappings-for-regular-people'
 Plug 'tpope/vim-surround'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'ervandew/supertab'
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+Plug 'lifepillar/vim-mucomplete'
+Plug 'jiangmiao/auto-pairs'
 
 call plug#end()
 
@@ -72,16 +73,10 @@ endif
 "set directory=~/.vim-tmp
 
 let mapleader = "-"
-"let g:rainbow_active = 1
 
 let g:NumberToggleTrigger="<F3>"
 
-"au VimEnter * RainbowParenthesesToggle
-"au Syntax * RainbowParenthesesLoadRound
-"au Syntax * RainbowParenthesesLoadSquare
-"au Syntax * RainbowParenthesesLoadBraces
-
-"au VimEnter * RainbowToggle
+" Escape insert mode quickly by typing 'kj'
 :imap kj <Esc>
 
 " Enable the list of buffers
@@ -123,7 +118,18 @@ set wildignore+=*/node_modules/*     " MacOSX/Linux
 
 let g:move_key_modifier = 'C'
 
+" Settings for vim-smooth-scroll
 noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
 noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
 noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
 noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
+
+"" Autocompletion using MyComplete
+set completeopt=menuone,noinsert,noselect
+set shortmess+=c " Turn off completion messages
+
+inoremap <expr> <c-e> mucomplete#popup_exit("\<c-e>")
+inoremap <expr> <c-y> mucomplete#popup_exit("\<c-y>")
+inoremap <expr>  <cr> mucomplete#popup_exit("\<cr>")
+
+let g:mucomplete#enable_auto_at_startup = 1 
