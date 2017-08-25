@@ -17,8 +17,9 @@ Plug 'guns/vim-sexp'
 Plug 'tpope/vim-sexp-mappings-for-regular-people'
 Plug 'tpope/vim-surround'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'lifepillar/vim-mucomplete'
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 Plug 'jiangmiao/auto-pairs'
+Plug 'ntpeters/vim-better-whitespace'
 
 call plug#end()
 
@@ -35,7 +36,6 @@ set smarttab
 set shiftwidth=2
 set tabstop=2
 set expandtab
-set wrap
 set nolinebreak
 set nolist
 set textwidth=0
@@ -50,6 +50,11 @@ set pastetoggle=<F2>
 set mouse=
 set backup
 set swapfile
+
+"" Text Wrapping
+set textwidth=79
+set colorcolumn=80
+set wrap
 
 " Save temporary/backup files not in the local directory, but in your ~/.vim
 " directory, to keep them out of git repos. 
@@ -123,13 +128,3 @@ noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
 noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
 noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
 noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
-
-"" Autocompletion using MyComplete
-set completeopt=menuone,noinsert,noselect
-set shortmess+=c " Turn off completion messages
-
-inoremap <expr> <c-e> mucomplete#popup_exit("\<c-e>")
-inoremap <expr> <c-y> mucomplete#popup_exit("\<c-y>")
-inoremap <expr>  <cr> mucomplete#popup_exit("\<cr>")
-
-let g:mucomplete#enable_auto_at_startup = 1 
