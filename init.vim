@@ -57,7 +57,7 @@ set colorcolumn=80
 set wrap
 
 " Save temporary/backup files not in the local directory, but in your ~/.vim
-" directory, to keep them out of git repos. 
+" directory, to keep them out of git repos.
 " But first mkdir backup, swap, and undo first to make this work
 call system('mkdir ~/.vim')
 call system('mkdir ~/.vim/backup')
@@ -115,8 +115,6 @@ let g:closetag_filenames = "*.xml,*.html,*.xhtml,*.phtml,*.php"
 au FileType xml,html,phtml,php,xhtml,js let b:delimitMate_matchpairs = "(:),[:],{:}"
 
 autocmd Filetype javascript setlocal ts=4 sw=4 sts=0 noexpandtab
-
-let g:vimwiki_list = [{'path':'~/Dropbox/Työtekstit/vimwiki'}]
 
 let g:javascript_plugin_jsdoc = 1
 set wildignore+=*/node_modules/*     " MacOSX/Linux
