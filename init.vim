@@ -3,7 +3,9 @@ set nocompatible              " be iMproved, required
 " Plugins are defined here using plug-vim
 call plug#begin('~/.config/nvim/bundle')
 
+"Plug 'leafgarland/typescript-vim'
 Plug 'kien/ctrlp.vim'
+Plug 'pangloss/vim-javascript'
 Plug 'alvan/vim-closetag'
 Plug 'tpope/vim-commentary'
 Plug 'terryma/vim-smooth-scroll'
@@ -18,7 +20,7 @@ Plug 'guns/vim-sexp'
 Plug 'tpope/vim-sexp-mappings-for-regular-people'
 Plug 'tpope/vim-surround'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer --clang-completer' }
 Plug 'jiangmiao/auto-pairs'
 Plug 'ntpeters/vim-better-whitespace'
 
@@ -115,7 +117,7 @@ nmap <leader>bl :ls<CR>
 let g:closetag_filenames = "*.xml,*.html,*.xhtml,*.phtml,*.php"
 au FileType xml,html,phtml,php,xhtml,js let b:delimitMate_matchpairs = "(:),[:],{:}"
 
-autocmd Filetype javascript setlocal ts=4 sw=4 sts=0 noexpandtab
+autocmd Filetype javascript setlocal ts=2 sw=2 sts=2 expandtab
 
 let g:javascript_plugin_jsdoc = 1
 set wildignore+=*/node_modules/*     " MacOSX/Linux
@@ -127,3 +129,13 @@ noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
 noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
 noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
 noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
+
+" Trim unwanted whitespaces by :call TrimWhiteSpace()
+fun! TrimWhitespace()
+  let l:save = winsaveview()
+  %s/\s\+$//e
+  call winrestview(l:save)
+endfun
+
+" A shorter way: :Siivous
+command! Siivous call TrimWhitespace()
