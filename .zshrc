@@ -1,11 +1,13 @@
+# If you come from bash you might have to change your $PATH.
+# export PATH=$HOME/bin:/usr/local/bin:$PATH
+
 # Path to your oh-my-zsh installation.
 export ZSH=/home/tvirolai/.oh-my-zsh
 
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
-ZSH_THEME="agnoster"
+# Set name of the theme to load. Optionally, if you set this to "random"
+# it'll load a random theme each time that oh-my-zsh is loaded.
+# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
+ZSH_THEME="robbyrussell"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -51,16 +53,11 @@ ZSH_THEME="agnoster"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git)
 
-# User configuration
-
-# export PATH="/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
-# export MANPATH="/usr/local/man:$MANPATH"
-
 source $ZSH/oh-my-zsh.sh
 
-source ~/xinput.sh
+# User configuration
 
-#source ~/.profile
+# export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
@@ -76,7 +73,7 @@ source ~/xinput.sh
 # export ARCHFLAGS="-arch x86_64"
 
 # ssh
-# export SSH_KEY_PATH="~/.ssh/dsa_id"
+# export SSH_KEY_PATH="~/.ssh/rsa_id"
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
@@ -86,31 +83,14 @@ source ~/xinput.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+source /home/tvirolai/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 
-setopt correct
-setopt autocd
-
-plugins+=(zsh-completions)
-autoload -U compinit && compinit
-source ~/.config/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-
-autoload -U promptinit && promptinit
-
-export TERM="xterm-256color"
-source /home/tvirolai/.config/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
-export NVM_DIR="/home/tvirolai/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-
-# Declare the variable
-typeset -A ZSH_HIGHLIGHT_STYLES
-
-# To differentiate aliases from other command types
-ZSH_HIGHLIGHT_STYLES[alias]='fg=magenta,bold'
-
-# To have paths colored instead of underlined
-ZSH_HIGHLIGHT_STYLES[path]='fg=cyan'
-
-# redefine prompt_context for hiding user@hostname
-prompt_context () { }
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+alias t="~/Dropbox/todo/todo.sh"
+source /home/tvirolai/xinput.sh
+
+alias c="clear"
