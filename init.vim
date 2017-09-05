@@ -3,7 +3,7 @@ set nocompatible              " be iMproved, required
 " Plugins are defined here using plug-vim
 call plug#begin('~/.config/nvim/bundle')
 
-"Plug 'leafgarland/typescript-vim'
+Plug 'inside/vim-search-pulse'
 Plug 'kien/ctrlp.vim'
 Plug 'pangloss/vim-javascript'
 Plug 'alvan/vim-closetag'
@@ -139,3 +139,6 @@ endfun
 
 " A shorter way: :Siivous
 command! Siivous call TrimWhitespace()
+
+" Only the search pattern will pulse
+let g:vim_search_pulse_mode = 'pattern'
