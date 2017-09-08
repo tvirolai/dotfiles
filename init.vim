@@ -12,7 +12,6 @@ Plug 'terryma/vim-smooth-scroll'
 Plug 'matze/vim-move'
 Plug 'vim-airline/vim-airline'
 Plug 'easymotion/vim-easymotion'
-Plug 'justinmk/vim-sneak'
 Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
 Plug 'tpope/vim-repeat'
@@ -141,4 +140,4 @@ endfun
 command! Siivous call TrimWhitespace()
 
 " Only the search pattern will pulse
-let g:vim_search_pulse_mode = 'pattern'
+let g:vim_search_pulse_mode = 'cursor_line'
