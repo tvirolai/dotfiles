@@ -5,6 +5,7 @@ call plug#begin('~/.config/nvim/bundle')
 
 Plug 'inside/vim-search-pulse'
 Plug 'kien/ctrlp.vim'
+Plug 'nvie/vim-flake8'
 Plug 'pangloss/vim-javascript'
 Plug 'alvan/vim-closetag'
 Plug 'tpope/vim-commentary'
@@ -57,6 +58,8 @@ set swapfile
 set textwidth=79
 set colorcolumn=80
 set wrap
+set linebreak
+set nolist  " list disables linebreak
 
 " Save temporary/backup files not in the local directory, but in your ~/.vim
 " directory, to keep them out of git repos.
@@ -76,8 +79,8 @@ if has('persistent_undo')
     set undoreload=10000
 endif
 
-"set backupdir=~/.vim-tmp
-"set directory=~/.vim-tmp
+let g:loaded_netrw       = 1
+let g:loaded_netrwPlugin = 1
 
 let mapleader = "-"
 
@@ -113,10 +116,16 @@ nmap <leader>bq :bp <BAR> bd #<CR>
 " Show all open buffers and their status
 nmap <leader>bl :ls<CR>
 
+" Close all other splits except the focused one
+nmap ö :only<CR>
+
 let g:closetag_filenames = "*.xml,*.html,*.xhtml,*.phtml,*.php"
 au FileType xml,html,phtml,php,xhtml,js let b:delimitMate_matchpairs = "(:),[:],{:}"
 
 autocmd Filetype javascript setlocal ts=2 sw=2 sts=2 expandtab
+
+" Run Flake8 (PEP8 conformance test) to each opened Python file
+autocmd BufWritePost *.py call Flake8()
 
 let g:javascript_plugin_jsdoc = 1
 set wildignore+=*/node_modules/*     " MacOSX/Linux
