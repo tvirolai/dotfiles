@@ -23,6 +23,7 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer --clang-completer' }
 Plug 'jiangmiao/auto-pairs'
 Plug 'ntpeters/vim-better-whitespace'
+Plug 'mxw/vim-jsx'
 
 call plug#end()
 
@@ -55,10 +56,9 @@ set backup
 set swapfile
 
 "" Text Wrapping
-set textwidth=79
+"set textwidth=79
 set colorcolumn=80
 set wrap
-set linebreak
 set nolist  " list disables linebreak
 
 " Save temporary/backup files not in the local directory, but in your ~/.vim
@@ -125,7 +125,7 @@ au FileType xml,html,phtml,php,xhtml,js let b:delimitMate_matchpairs = "(:),[:],
 autocmd Filetype javascript setlocal ts=2 sw=2 sts=2 expandtab
 
 " Run Flake8 (PEP8 conformance test) to each opened Python file
-autocmd BufWritePost *.py call Flake8()
+" autocmd BufWritePost *.py call Flake8()
 
 let g:javascript_plugin_jsdoc = 1
 set wildignore+=*/node_modules/*     " MacOSX/Linux
@@ -150,3 +150,6 @@ command! Siivous call TrimWhitespace()
 
 " Only the search pattern will pulse
 let g:vim_search_pulse_mode = 'cursor_line'
+
+" Format JSX also in files with .js suffix
+let g:jsx_ext_required = 0
