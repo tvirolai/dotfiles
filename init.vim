@@ -119,6 +119,8 @@ nmap <leader>bl :ls<CR>
 " Close all other splits except the focused one
 nmap ö :only<CR>
 
+nmap ä :w<CR>
+
 let g:closetag_filenames = "*.xml,*.html,*.xhtml,*.phtml,*.php"
 au FileType xml,html,phtml,php,xhtml,js let b:delimitMate_matchpairs = "(:),[:],{:}"
 
