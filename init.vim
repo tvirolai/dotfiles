@@ -24,6 +24,7 @@ Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer --clang-co
 Plug 'jiangmiao/auto-pairs'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'mxw/vim-jsx'
+Plug 'kshenoy/vim-signature'
 
 call plug#end()
 
@@ -117,9 +118,9 @@ nmap <leader>bq :bp <BAR> bd #<CR>
 nmap <leader>bl :ls<CR>
 
 " Close all other splits except the focused one
-nmap ö :only<CR>
+nmap ä :only<CR>
 
-nmap ä :w<CR>
+nmap ö :w<CR>
 
 let g:closetag_filenames = "*.xml,*.html,*.xhtml,*.phtml,*.php"
 au FileType xml,html,phtml,php,xhtml,js let b:delimitMate_matchpairs = "(:),[:],{:}"
