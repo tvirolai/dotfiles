@@ -1,0 +1,11 @@
+let mapleader = "-"
+
+" Escape insert mode quickly by typing 'kj'
+:imap kj <Esc>
+
+" Close all other splits except the focused one
+nmap ä :only<CR>
+
+nmap ö :w<CR>
+
+let g:move_key_modifier = 'C'

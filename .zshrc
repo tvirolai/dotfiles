@@ -2,12 +2,22 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH=/home/tvirolai/.oh-my-zsh
+export ZSH=/Users/tuomo.virolainen/.oh-my-zsh
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="robbyrussell"
+ZSH_THEME="powerlevel9k/powerlevel9k"
+# ZSH_THEME="agnoster"
+
+DEFAULT_USER=$USER
+
+# Set list of themes to load
+# Setting this variable when ZSH_THEME=random
+# cause zsh load theme from this variable instead of
+# looking in ~/.oh-my-zsh/themes/
+# An empty array have no effect
+# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -51,7 +61,10 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(
+  zsh-autosuggestions
+  git
+)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -83,14 +96,33 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-source /home/tvirolai/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+export PATH=/Users/tuomo.virolainen/bin:/usr/local/bin:$PATH
+alias vi='nvim'
+alias vim='nvim'
+source /Users/tuomo.virolainen/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+alias rmcontainers='docker container rm $(docker container stop $(docker container ls -aq))'
+alias rmimages='docker image rm $(docker image ls -aq)'
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-alias t="~/Dropbox/todo/todo.sh"
-source /home/tvirolai/xinput.sh
+. /Users/tuomo.virolainen/bin/z.sh
 
-alias c="clear"
+unset LSCOLORS
+export CLICOLOR=1
+export CLICOLOR_FORCE=1
+
+alias l='exa -la'
+alias c='clear'
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/Users/tuomo.virolainen/.sdkman"
+[[ -s "/Users/tuomo.virolainen/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/tuomo.virolainen/.sdkman/bin/sdkman-init.sh"
+export PATH="$HOME/.jenv/bin:$PATH"
+eval "$(jenv init -)"
+
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=6'
+

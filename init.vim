@@ -3,7 +3,12 @@ set nocompatible              " be iMproved, required
 " Plugins are defined here using plug-vim
 call plug#begin('~/.config/nvim/bundle')
 
+Plug 'luochen1990/rainbow'
 Plug 'inside/vim-search-pulse'
+Plug 'lifepillar/vim-solarized8'
+Plug 'ayu-theme/ayu-vim'
+Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'joshdick/onedark.vim'
 Plug 'kien/ctrlp.vim'
 Plug 'nvie/vim-flake8'
 Plug 'pangloss/vim-javascript'
@@ -29,12 +34,24 @@ Plug 'kshenoy/vim-signature'
 call plug#end()
 
 syntax enable
-colorscheme monokai
+set termguicolors
+
+let ayucolor="mirage"
+
+" A selection of nice color schemes to alternate between
+
+colorscheme dracula
+" colorscheme monokai
+" colorscheme onedark
+" colorscheme gruvbox
+" colorscheme ayu
 filetype plugin indent on    " required
 
+" let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
 set encoding=utf-8
 set fileencoding=utf-8
 "set cul - Valitun rivin alleviivaus
+set cursorline " - Valitun rivin korostus
 set magic
 set showmatch
 set smarttab
@@ -133,6 +150,8 @@ autocmd Filetype javascript setlocal ts=2 sw=2 sts=2 expandtab
 let g:javascript_plugin_jsdoc = 1
 set wildignore+=*/node_modules/*     " MacOSX/Linux
 
+let g:ctrlp_custom_ignore = 'node_modules\|out\|target\|git'
+
 let g:move_key_modifier = 'C'
 
 " Settings for vim-smooth-scroll
@@ -140,6 +159,9 @@ noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
 noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
 noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
 noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
+
+" Compile Clojure by pressing §
+nnoremap § :Require<CR>
 
 " Trim unwanted whitespaces by :call TrimWhiteSpace()
 fun! TrimWhitespace()
