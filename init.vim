@@ -4,6 +4,7 @@ set nocompatible              " be iMproved, required
 call plug#begin('~/.config/nvim/bundle')
 
 Plug 'luochen1990/rainbow'
+Plug 'scrooloose/nerdtree'
 Plug 'inside/vim-search-pulse'
 Plug 'lifepillar/vim-solarized8'
 Plug 'ayu-theme/ayu-vim'
@@ -36,10 +37,11 @@ call plug#end()
 syntax enable
 set termguicolors
 
-let ayucolor="mirage"
+set showcmd
 
 " A selection of nice color schemes to alternate between
 
+let ayucolor="mirage"
 colorscheme dracula
 " colorscheme monokai
 " colorscheme onedark
@@ -47,10 +49,11 @@ colorscheme dracula
 " colorscheme ayu
 filetype plugin indent on    " required
 
+map <C-n> :NERDTreeToggle<CR>
+
 " let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
 set encoding=utf-8
 set fileencoding=utf-8
-"set cul - Valitun rivin alleviivaus
 set cursorline " - Valitun rivin korostus
 set magic
 set showmatch
@@ -137,6 +140,7 @@ nmap <leader>bl :ls<CR>
 " Close all other splits except the focused one
 nmap ä :only<CR>
 
+" Save by pressing ö
 nmap ö :w<CR>
 
 let g:closetag_filenames = "*.xml,*.html,*.xhtml,*.phtml,*.php"
@@ -160,7 +164,7 @@ noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
 noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
 noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
 
-" Compile Clojure by pressing §
+" Compile Clojure namespace by pressing §
 nnoremap § :Require<CR>
 
 " Trim unwanted whitespaces by :call TrimWhiteSpace()
