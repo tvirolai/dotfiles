@@ -41,13 +41,15 @@ set showcmd
 
 " A selection of nice color schemes to alternate between
 
-let ayucolor="mirage"
 " colorscheme dracula
 " colorscheme monokai
 " colorscheme onedark
 colorscheme gruvbox
 let g:gruvbox_contrast_dark = 'soft'
+
+" let ayucolor="mirage"
 " colorscheme ayu
+
 " colorscheme apprentice
 filetype plugin indent on    " required
 
