@@ -45,8 +45,10 @@ let ayucolor="mirage"
 " colorscheme dracula
 " colorscheme monokai
 " colorscheme onedark
-" colorscheme gruvbox
-colorscheme ayu
+colorscheme gruvbox
+let g:gruvbox_contrast_dark = 'soft'
+" colorscheme ayu
+" colorscheme apprentice
 filetype plugin indent on    " required
 
 map <C-n> :NERDTreeToggle<CR>
