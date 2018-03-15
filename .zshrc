@@ -126,3 +126,8 @@ eval "$(jenv init -)"
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=6'
 
+# Whenever a command is executed, write it to a global history
+PROMPT_COMMAND="history -a ~/.zsh_history.global; $PROMPT_COMMAND"
+
+# On C-r set HISTFILE and run hh
+bind -x '"\C-r": "HISTFILE=~/.zsh_history.global hh"'
