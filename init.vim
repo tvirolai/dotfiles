@@ -42,11 +42,11 @@ set showcmd
 " A selection of nice color schemes to alternate between
 
 let ayucolor="mirage"
-colorscheme dracula
+" colorscheme dracula
 " colorscheme monokai
 " colorscheme onedark
 " colorscheme gruvbox
-" colorscheme ayu
+colorscheme ayu
 filetype plugin indent on    " required
 
 map <C-n> :NERDTreeToggle<CR>
@@ -103,7 +103,8 @@ endif
 let g:loaded_netrw       = 1
 let g:loaded_netrwPlugin = 1
 
-let mapleader = "-"
+" let mapleader = "-"
+let mapleader = "\<Space>"
 
 let g:NumberToggleTrigger="<F3>"
 
@@ -182,3 +183,9 @@ let g:vim_search_pulse_mode = 'cursor_line'
 
 " Format JSX also in files with .js suffix
 let g:jsx_ext_required = 0
+
+function SwitchBuffer()
+  b#
+endfunction
+
+nmap <Tab> :call SwitchBuffer()<CR>
