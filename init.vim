@@ -3,14 +3,16 @@ set nocompatible              " be iMproved, required
 " Plugins are defined here using plug-vim
 call plug#begin('~/.config/nvim/bundle')
 
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 Plug 'luochen1990/rainbow'
 Plug 'scrooloose/nerdtree'
 Plug 'inside/vim-search-pulse'
-Plug 'lifepillar/vim-solarized8'
 Plug 'ayu-theme/ayu-vim'
 Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'joshdick/onedark.vim'
-Plug 'kien/ctrlp.vim'
+Plug 'lifepillar/vim-solarized8'
+" Plug 'kien/ctrlp.vim'
 Plug 'nvie/vim-flake8'
 Plug 'pangloss/vim-javascript'
 Plug 'alvan/vim-closetag'
@@ -31,6 +33,7 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'mxw/vim-jsx'
 Plug 'kshenoy/vim-signature'
+Plug 'neovimhaskell/haskell-vim'
 
 call plug#end()
 
@@ -41,15 +44,13 @@ set showcmd
 
 " A selection of nice color schemes to alternate between
 
+let ayucolor="mirage"
 " colorscheme dracula
 " colorscheme monokai
 " colorscheme onedark
 colorscheme gruvbox
 let g:gruvbox_contrast_dark = 'soft'
-
-" let ayucolor="mirage"
 " colorscheme ayu
-
 " colorscheme apprentice
 filetype plugin indent on    " required
 
@@ -193,3 +194,10 @@ function SwitchBuffer()
 endfunction
 
 nmap <Tab> :call SwitchBuffer()<CR>
+let g:fzf_action = {
+      \ 'ctrl-s': 'split',
+      \ 'ctrl-v': 'vsplit'
+      \ }
+nnoremap <c-p> :FZF<cr>
+
+au BufNewFile,BufRead *.boot set filetype=clojure

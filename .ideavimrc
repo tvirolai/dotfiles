@@ -1,0 +1,17 @@
+" Save by pressing ö
+nmap ö :w<CR>
+
+" Escape insert mode quickly by typing 'kj'
+:imap kj <Esc>
+
+let mapleader = "\<Space>"
+
+" Trim unwanted whitespaces by :call TrimWhiteSpace()
+fun! TrimWhitespace()
+  let l:save = winsaveview()
+  %s/\s\+$//e
+  call winrestview(l:save)
+endfun
+
+" A shorter way: :Siivous
+command! Siivous call TrimWhitespace()
