@@ -5,6 +5,7 @@ call plug#begin('~/.config/nvim/bundle')
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+Plug 'SevereOverfl0w/vim-replant', { 'do': ':UpdateRemotePlugins' }
 Plug 'luochen1990/rainbow'
 Plug 'scrooloose/nerdtree'
 Plug 'inside/vim-search-pulse'
@@ -12,7 +13,6 @@ Plug 'ayu-theme/ayu-vim'
 Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'joshdick/onedark.vim'
 Plug 'lifepillar/vim-solarized8'
-" Plug 'kien/ctrlp.vim'
 Plug 'nvie/vim-flake8'
 Plug 'pangloss/vim-javascript'
 Plug 'alvan/vim-closetag'
@@ -38,9 +38,15 @@ Plug 'neovimhaskell/haskell-vim'
 call plug#end()
 
 syntax enable
+set synmaxcol=128
+syntax sync minlines=256
+set regexpengine=1
+
 set termguicolors
 
 set showcmd
+
+set lazyredraw
 
 " A selection of nice color schemes to alternate between
 
@@ -55,13 +61,14 @@ let g:gruvbox_contrast_dark = 'soft'
 filetype plugin indent on    " required
 
 map <C-n> :NERDTreeToggle<CR>
+let NERDTreeShowHidden=1
 
 " let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
 set encoding=utf-8
 set fileencoding=utf-8
 set cursorline " - Valitun rivin korostus
 set magic
-set showmatch
+" set showmatch
 set smarttab
 set shiftwidth=2
 set tabstop=2
@@ -149,6 +156,10 @@ nmap ä :only<CR>
 " Save by pressing ö
 nmap ö :w<CR>
 
+" Switch buffers the same way as in Spacemacs - space b b. Note the trailing
+" space
+nmap <leader>bb :b 
+
 let g:closetag_filenames = "*.xml,*.html,*.xhtml,*.phtml,*.php"
 au FileType xml,html,phtml,php,xhtml,js let b:delimitMate_matchpairs = "(:),[:],{:}"
 
@@ -156,6 +167,8 @@ autocmd Filetype javascript setlocal ts=2 sw=2 sts=2 expandtab
 
 " Run Flake8 (PEP8 conformance test) to each opened Python file
 " autocmd BufWritePost *.py call Flake8()
+
+" let g:python_host_prog = "~/.pyenv/versions/3.6.5/bin/python3"
 
 let g:javascript_plugin_jsdoc = 1
 set wildignore+=*/node_modules/*     " MacOSX/Linux
@@ -165,10 +178,10 @@ let g:ctrlp_custom_ignore = 'node_modules\|out\|target\|git'
 let g:move_key_modifier = 'C'
 
 " Settings for vim-smooth-scroll
-noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
-noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
-noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
-noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
+" noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
+" noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
+" noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
+" noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
 
 " Compile Clojure namespace by pressing §
 nnoremap § :Require<CR>
