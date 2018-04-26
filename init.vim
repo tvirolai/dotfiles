@@ -5,6 +5,7 @@ call plug#begin('~/.config/nvim/bundle')
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+Plug 'guns/vim-clojure-highlight'
 Plug 'SevereOverfl0w/vim-replant', { 'do': ':UpdateRemotePlugins' }
 Plug 'luochen1990/rainbow'
 Plug 'scrooloose/nerdtree'
@@ -38,7 +39,7 @@ Plug 'neovimhaskell/haskell-vim'
 call plug#end()
 
 syntax enable
-set synmaxcol=128
+set synmaxcol=200
 syntax sync minlines=256
 set regexpengine=1
 
@@ -50,7 +51,7 @@ set lazyredraw
 
 " A selection of nice color schemes to alternate between
 
-let ayucolor="mirage"
+" let ayucolor="mirage"
 " colorscheme dracula
 " colorscheme monokai
 " colorscheme onedark
@@ -135,7 +136,7 @@ set hidden
 
 " To open a new empty buffer
 " This replaces :tabnew which I used to bind to this mapping
-nmap <leader>T :enew<cr>
+nmap <leader>T :enew<CR>
 
 " Move to the next buffer
 nmap <leader>l :bnext<CR>
@@ -156,9 +157,15 @@ nmap ä :only<CR>
 " Save by pressing ö
 nmap ö :w<CR>
 
-" Switch buffers the same way as in Spacemacs - space b b. Note the trailing
-" space
-nmap <leader>bb :b 
+" Close a buffer quickly by pressing å in normal mode
+nmap å :bd<CR>
+
+" In Clojure, jump to symbol definition by pressing Ö on symbol
+nmap Ö ]<C-d>
+
+
+" Switch buffers the same way as in Spacemacs - space b b.
+nmap <leader>bb :b<Space>
 
 let g:closetag_filenames = "*.xml,*.html,*.xhtml,*.phtml,*.php"
 au FileType xml,html,phtml,php,xhtml,js let b:delimitMate_matchpairs = "(:),[:],{:}"
