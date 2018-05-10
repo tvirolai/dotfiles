@@ -35,11 +35,12 @@ Plug 'ntpeters/vim-better-whitespace'
 Plug 'mxw/vim-jsx'
 Plug 'kshenoy/vim-signature'
 Plug 'neovimhaskell/haskell-vim'
+Plug 'mfukar/robotframework-vim'
 
 call plug#end()
 
 syntax enable
-set synmaxcol=200
+set synmaxcol=300
 syntax sync minlines=256
 set regexpengine=1
 
@@ -157,12 +158,17 @@ nmap ä :only<CR>
 " Save by pressing ö
 nmap ö :w<CR>
 
+" Open Silver Searcher with key Ä
+nmap Ä :Ag<CR>
+
 " Close a buffer quickly by pressing å in normal mode
 nmap å :bd<CR>
 
 " In Clojure, jump to symbol definition by pressing Ö on symbol
 nmap Ö ]<C-d>
 
+" In Clojure, run tests by pressing ° in normal mode
+nmap ° :RunTests<CR>
 
 " Switch buffers the same way as in Spacemacs - space b b.
 nmap <leader>bb :b<Space>
