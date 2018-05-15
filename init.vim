@@ -65,7 +65,7 @@ filetype plugin indent on    " required
 map <C-n> :NERDTreeToggle<CR>
 let NERDTreeShowHidden=1
 
-" let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
+let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
 set encoding=utf-8
 set fileencoding=utf-8
 set cursorline " - Valitun rivin korostus
@@ -117,13 +117,15 @@ endif
 let g:loaded_netrw       = 1
 let g:loaded_netrwPlugin = 1
 
-" let mapleader = "-"
 let mapleader = "\<Space>"
 
 let g:NumberToggleTrigger="<F3>"
 
 " Escape insert mode quickly by typing 'kj'
-:imap kj <Esc>
+inoremap kj <Esc>
+
+" Also remap Ctrl-C to work similarly to Esc
+inoremap <C-c> <Esc>
 
 " Enable the list of buffers
 let g:airline#extensions#tabline#enabled = 1
@@ -177,11 +179,6 @@ let g:closetag_filenames = "*.xml,*.html,*.xhtml,*.phtml,*.php"
 au FileType xml,html,phtml,php,xhtml,js let b:delimitMate_matchpairs = "(:),[:],{:}"
 
 autocmd Filetype javascript setlocal ts=2 sw=2 sts=2 expandtab
-
-" Run Flake8 (PEP8 conformance test) to each opened Python file
-" autocmd BufWritePost *.py call Flake8()
-
-" let g:python_host_prog = "~/.pyenv/versions/3.6.5/bin/python3"
 
 let g:javascript_plugin_jsdoc = 1
 set wildignore+=*/node_modules/*     " MacOSX/Linux
