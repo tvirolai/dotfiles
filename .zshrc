@@ -3,12 +3,25 @@
 
 # Path to your oh-my-zsh installation.
 export ZSH=/Users/tuomo.virolainen/.oh-my-zsh
+export PYENV_ROOT="$HOME/.pyenv"
+export OH_MY_ZSH="$HOME/.oh-my-zsh"
+
+unset LSCOLORS
+export CLICOLOR=1
+# export CLICOLOR_FORCE=1
+
+# set 256 color profile where possible
+if [[ $COLORTERM == gnome-* && $TERM == xterm ]] && infocmp gnome-256color >/dev/null 2>&1; then
+    export TERM=gnome-256color
+elif infocmp xterm-256color >/dev/null 2>&1; then
+    export TERM=xterm-256color
+fi
+
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 ZSH_THEME="powerlevel9k/powerlevel9k"
-# ZSH_THEME="agnoster"
 
 DEFAULT_USER=$USER
 
@@ -97,7 +110,7 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-export PATH=/Users/tuomo.virolainen/bin:/usr/local/bin:$PATH
+export PATH=/Users/tuomo.virolainen/bin:/usr/local/bin:/Users/tuomo.virolainen/mongodb/mongodb-osx-x86_64-3.4.14/bin:$PATH
 alias vi='nvim'
 alias vim='nvim'
 source /Users/tuomo.virolainen/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
@@ -111,23 +124,21 @@ export NVM_DIR="$HOME/.nvm"
 
 . /Users/tuomo.virolainen/bin/z.sh
 
-unset LSCOLORS
-export CLICOLOR=1
-export CLICOLOR_FORCE=1
-
 alias l='exa -la'
 alias c='clear'
+
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=6'
+
+# Whenever a command is executed, write it to a global history
+# PROMPT_COMMAND="history -a ~/.zsh_history.global; $PROMPT_COMMAND"
+
+# On C-r set HISTFILE and run hh
+# bindkey "C-r" "HISTFILE=~/.bash_history.global hh"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/Users/tuomo.virolainen/.sdkman"
 [[ -s "/Users/tuomo.virolainen/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/tuomo.virolainen/.sdkman/bin/sdkman-init.sh"
 export PATH="$HOME/.jenv/bin:$PATH"
 eval "$(jenv init -)"
-
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=6'
-
-# Whenever a command is executed, write it to a global history
-PROMPT_COMMAND="history -a ~/.zsh_history.global; $PROMPT_COMMAND"
-
-# On C-r set HISTFILE and run hh
-bindkey "C-r" "HISTFILE=~/.bash_history.global hh"
