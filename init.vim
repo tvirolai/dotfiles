@@ -36,6 +36,7 @@ Plug 'mxw/vim-jsx'
 Plug 'kshenoy/vim-signature'
 Plug 'neovimhaskell/haskell-vim'
 Plug 'mfukar/robotframework-vim'
+Plug 'gregspurrier/vim-midje'
 
 call plug#end()
 
@@ -57,6 +58,7 @@ set lazyredraw
 " colorscheme monokai
 " colorscheme onedark
 colorscheme gruvbox
+
 let g:gruvbox_contrast_dark = 'soft'
 " colorscheme ayu
 " colorscheme apprentice
