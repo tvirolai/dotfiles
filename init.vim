@@ -168,14 +168,17 @@ nmap Ä :Ag<CR>
 " Close a buffer quickly by pressing å in normal mode
 nmap å :bd<CR>
 
-" In Clojure, jump to symbol definition by pressing Ö on symbol
-nmap Ö ]<C-d>
-
-" In Clojure, run tests by pressing ° in normal mode
-nmap ° :RunTests<CR>
-
 " Switch buffers the same way as in Spacemacs - space b b.
 nmap <leader>bb :b<Space>
+
+" Clojure-specific bindings
+
+" Compile Clojure namespace by pressing §
+nmap § :Require<CR>
+" run tests with °
+nmap ° :RunTests<CR>
+" Jump to definition by pressing Ö on symbol
+nmap Ö ]<C-d>
 
 let g:closetag_filenames = "*.xml,*.html,*.xhtml,*.phtml,*.php"
 au FileType xml,html,phtml,php,xhtml,js let b:delimitMate_matchpairs = "(:),[:],{:}"
@@ -194,9 +197,6 @@ let g:move_key_modifier = 'C'
 " noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
 " noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
 " noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
-
-" Compile Clojure namespace by pressing §
-nnoremap § :Require<CR>
 
 " Trim unwanted whitespaces by :call TrimWhiteSpace()
 fun! TrimWhitespace()
