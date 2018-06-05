@@ -132,6 +132,9 @@ inoremap <C-c> <Esc>
 " Enable the list of buffers
 let g:airline#extensions#tabline#enabled = 1
 
+" Show buffer number on tab
+let g:airline#extensions#tabline#buffer_nr_show = 1
+
 " Show just the filename
 let g:airline#extensions#tabline#fnamemod = ':t'
 
@@ -159,16 +162,16 @@ nmap <leader>bl :ls<CR>
 " Close all other splits except the focused one
 nmap ä :only<CR>
 
-" Save by pressing ö
-nmap ö :w<CR>
-
 " Open Silver Searcher with key Ä
 nmap Ä :Ag<CR>
+"
+" Save by pressing ö
+nmap ö :w<CR>
 
 " Close a buffer quickly by pressing å in normal mode
 nmap å :bd<CR>
 
-" Switch buffers the same way as in Spacemacs - space b b.
+" Switch buffers by name/number the same way as in Spacemacs - space b b.
 nmap <leader>bb :b<Space>
 
 " Clojure-specific bindings
