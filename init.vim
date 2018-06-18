@@ -36,7 +36,8 @@ Plug 'mxw/vim-jsx'
 Plug 'kshenoy/vim-signature'
 Plug 'neovimhaskell/haskell-vim'
 Plug 'mfukar/robotframework-vim'
-Plug 'gregspurrier/vim-midje'
+" Plug 'gregspurrier/vim-midje'
+Plug 'elixir-editors/vim-elixir'
 
 call plug#end()
 
@@ -66,6 +67,9 @@ filetype plugin indent on    " required
 
 map <C-n> :NERDTreeToggle<CR>
 let NERDTreeShowHidden=1
+
+" Get the results of previous fzf search using Ctrl-N / Ctrl-P
+let g:fzf_history_dir = '~/.local/share/fzf-history'
 
 let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
 set encoding=utf-8
@@ -216,7 +220,7 @@ nmap ° :RunTests<CR>
 " Jump to definition by pressing Ö on symbol
 nmap Ö ]<C-d>
 
-let g:closetag_filenames = "*.xml,*.html,*.xhtml,*.phtml,*.php"
+let g:closetag_filenames = "*.xml,*.html,*.xhtml,*.phtml,*.php,*.jsx,*.js"
 au FileType xml,html,phtml,php,xhtml,js let b:delimitMate_matchpairs = "(:),[:],{:}"
 
 autocmd Filetype javascript setlocal ts=2 sw=2 sts=2 expandtab
