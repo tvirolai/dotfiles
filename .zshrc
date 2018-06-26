@@ -126,6 +126,7 @@ export NVM_DIR="$HOME/.nvm"
 
 alias l='exa -la'
 alias c='clear'
+alias e='exit'
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=6'
 
@@ -140,5 +141,5 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=6'
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/Users/tuomo.virolainen/.sdkman"
 [[ -s "/Users/tuomo.virolainen/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/tuomo.virolainen/.sdkman/bin/sdkman-init.sh"
-export PATH="$HOME/.jenv/bin:$PATH"
-eval "$(jenv init -)"
+
+source ~/lupis_pw.sh
