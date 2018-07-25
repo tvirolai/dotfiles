@@ -38,7 +38,8 @@ Plug 'neovimhaskell/haskell-vim'
 Plug 'mfukar/robotframework-vim'
 " Plug 'gregspurrier/vim-midje'
 Plug 'elixir-editors/vim-elixir'
-
+Plug 'jacoborus/tender.vim'
+Plug 'kovisoft/slimv', { 'for': 'lisp' }
 call plug#end()
 
 syntax enable
@@ -52,17 +53,19 @@ set showcmd
 
 set lazyredraw
 
+" let ayucolor="mirage"
+
 " A selection of nice color schemes to alternate between
 
-" let ayucolor="mirage"
 " colorscheme dracula
 " colorscheme monokai
 " colorscheme onedark
 colorscheme gruvbox
-
-let g:gruvbox_contrast_dark = 'soft'
 " colorscheme ayu
 " colorscheme apprentice
+" colorscheme tender
+
+let g:gruvbox_contrast_dark = 'soft'
 filetype plugin indent on    " required
 
 map <C-n> :NERDTreeToggle<CR>
@@ -205,8 +208,11 @@ nmap Ä :Ag<CR>
 " Save by pressing ö
 nmap ö :w<CR>
 
-" Close a buffer quickly by pressing å in normal mode
-nmap å :bd<CR>
+" Close a buffer quickly by pressing å in normal mode (without closing open
+" windows!)
+nmap å :bp<bar>sp<bar>bn<bar>bd<CR>
+" This version closes splits:
+" nmap å :bd<CR>
 
 " Switch buffers by name/number the same way as in Spacemacs - space b b.
 nmap <leader>bb :b<Space>
