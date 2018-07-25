@@ -6,6 +6,8 @@ export ZSH=/Users/tuomo.virolainen/.oh-my-zsh
 export PYENV_ROOT="$HOME/.pyenv"
 export OH_MY_ZSH="$HOME/.oh-my-zsh"
 
+export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
+
 unset LSCOLORS
 export CLICOLOR=1
 # export CLICOLOR_FORCE=1
@@ -110,7 +112,7 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-export PATH=/Users/tuomo.virolainen/bin:/usr/local/bin:/Users/tuomo.virolainen/mongodb/mongodb-osx-x86_64-3.4.14/bin:$PATH
+export PATH=/Users/tuomo.virolainen/bin:/usr/local/bin:/Users/tuomo.virolainen/mongodb/mongodb-osx-x86_64-3.6.6/bin:$PATH
 alias vi='nvim'
 alias vim='nvim'
 source /Users/tuomo.virolainen/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
