@@ -36,10 +36,12 @@ Plug 'mxw/vim-jsx'
 Plug 'kshenoy/vim-signature'
 Plug 'neovimhaskell/haskell-vim'
 Plug 'mfukar/robotframework-vim'
-" Plug 'gregspurrier/vim-midje'
 Plug 'elixir-editors/vim-elixir'
 Plug 'jacoborus/tender.vim'
 Plug 'kovisoft/slimv', { 'for': 'lisp' }
+Plug 'junegunn/seoul256.vim'
+Plug 'raphamorim/lucario'
+Plug 'NLKNguyen/papercolor-theme'
 call plug#end()
 
 syntax enable
@@ -61,9 +63,16 @@ set lazyredraw
 " colorscheme monokai
 " colorscheme onedark
 colorscheme gruvbox
+" colorscheme lucario
 " colorscheme ayu
 " colorscheme apprentice
 " colorscheme tender
+" let g:seoul256_background = 238
+" colorscheme seoul256
+
+" set t_Co=256
+" set background=dark
+" colorscheme PaperColor
 
 let g:gruvbox_contrast_dark = 'soft'
 filetype plugin indent on    " required
@@ -221,10 +230,12 @@ nmap <leader>bb :b<Space>
 
 " Compile Clojure namespace by pressing §
 nmap § :Require<CR>
-" run tests with °
-nmap ° :RunTests<CR>
+" run tests with Å
+nmap Å :RunTests<CR>
 " Jump to definition by pressing Ö on symbol
 nmap Ö ]<C-d>
+" Evaluate form under cursor by pressing °
+nmap ° cpp<CR>
 
 let g:closetag_filenames = "*.xml,*.html,*.xhtml,*.phtml,*.php,*.jsx,*.js"
 au FileType xml,html,phtml,php,xhtml,js let b:delimitMate_matchpairs = "(:),[:],{:}"
