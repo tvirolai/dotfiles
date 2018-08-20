@@ -262,8 +262,23 @@ fun! TrimWhitespace()
   call winrestview(l:save)
 endfun
 
+" Fix scandinavian chars
+fun! Scandics()
+  let l:save = winsaveview()
+  %s/å/\\u00e5/g
+  %s/Å/\\u00c5/g
+  %s/ä/\\u00e4/g
+  %s/Ä/\\u00c4/g
+  %s/ö/\\u00f6/g
+  %s/Ö/\\u00d6/g
+  call winrestview(l:save)
+endfun
+
+command! Scandics call Scandics()
+
 " A shorter way: :Siivous
 command! Siivous call TrimWhitespace()
+
 
 " Only the search pattern will pulse
 let g:vim_search_pulse_mode = 'cursor_line'
