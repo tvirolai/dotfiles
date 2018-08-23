@@ -23,6 +23,8 @@ Plug 'matze/vim-move'
 Plug 'vim-airline/vim-airline'
 Plug 'easymotion/vim-easymotion'
 Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+Plug 'tpope/vim-classpath'
+Plug 'tpope/vim-salve'
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
 Plug 'tpope/vim-repeat'
 Plug 'guns/vim-sexp'
