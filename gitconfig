@@ -4,8 +4,8 @@
 #	name = Tuomo Virolainen
 #	email = tuomo.virolainen@siilim150702.local
 [user]
-	name = Tuomo Virolainen
-	email = tuomo.virolainen@siili.com
+	name = Erkki Esimerkki
+	email = erkki.esimerkki@example.com
 [core]
 	excludesfile = /Users/tuomo.virolainen/.gitignore_global
 [difftool "sourcetree"]
