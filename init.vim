@@ -3,6 +3,11 @@ set nocompatible              " be iMproved, required
 " Plugins are defined here using plug-vim
 call plug#begin('~/.config/nvim/bundle')
 
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'guns/vim-clojure-highlight'
@@ -44,11 +49,15 @@ Plug 'kovisoft/slimv', { 'for': 'lisp' }
 Plug 'junegunn/seoul256.vim'
 Plug 'raphamorim/lucario'
 Plug 'NLKNguyen/papercolor-theme'
+Plug 'reasonml-editor/vim-reason-plus'
+Plug 'wellle/targets.vim'
+Plug 'rust-lang/rust.vim'
+Plug 'jpalardy/vim-slime'
 call plug#end()
 
 syntax enable
-set synmaxcol=300
-syntax sync minlines=256
+" set synmaxcol=300
+" syntax sync minlines=256
 set regexpengine=1
 
 set termguicolors
@@ -56,6 +65,12 @@ set termguicolors
 set showcmd
 
 set lazyredraw
+
+" Configure vim-slime to be able to send data from the editor window
+" to the REPL. Here Vim is assumed to be run on the left side of a vertically
+" split tmux window, with the repl on the right.
+let g:slime_target = "tmux"
+let g:slime_default_config = {"socket_name": "default", "target_pane": "{right-of}"}
 
 " let ayucolor="mirage"
 
@@ -191,7 +206,25 @@ set wildignorecase
 
 " This allows buffers to be hidden if you've modified a buffer.
 " This is almost a must if you wish to use buffers in this way.
+" Required for operations modifying multiple buffers like rename.
 set hidden
+
+let g:LanguageClient_serverCommands = {
+    \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
+    \ 'javascript': ['/usr/local/bin/javascript-typescript-stdio'],
+    \ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
+    \ 'python': ['/usr/local/bin/pyls'],
+    \ 'reason': ['/usr/local/bin/reason-language-server.exe']
+    \ }
+
+" enable autocomplete
+let g:deoplete#enable_at_startup = 1
+
+nnoremap <F5> :call LanguageClient_contextMenu()<CR>
+" Or map each action separately
+nnoremap <silent> gj :call LanguageClient#textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 
 " To open a new empty buffer
 " This replaces :tabnew which I used to bind to this mapping
@@ -239,6 +272,8 @@ nmap Ö ]<C-d>
 " Evaluate form under cursor by pressing °
 nmap ° cpp<CR>
 
+set maxmempattern=2000000
+
 let g:closetag_filenames = "*.xml,*.html,*.xhtml,*.phtml,*.php,*.jsx,*.js"
 au FileType xml,html,phtml,php,xhtml,js let b:delimitMate_matchpairs = "(:),[:],{:}"
 
@@ -275,6 +310,9 @@ fun! Scandics()
   %s/Ö/\\u00d6/g
   call winrestview(l:save)
 endfun
+
+" Close vim if NerdTree is the last open buffer
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 command! Scandics call Scandics()
 
