@@ -6,6 +6,8 @@ export ZSH=/Users/tuomo.virolainen/.oh-my-zsh
 export PYENV_ROOT="$HOME/.pyenv"
 export OH_MY_ZSH="$HOME/.oh-my-zsh"
 
+export JAVAFX_HOME="/Library/Java/JavaVirtualMachines/jdk-10.0.2.jdk/Contents/Home/lib"
+
 export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
 
 unset LSCOLORS
@@ -18,7 +20,6 @@ if [[ $COLORTERM == gnome-* && $TERM == xterm ]] && infocmp gnome-256color >/dev
 elif infocmp xterm-256color >/dev/null 2>&1; then
     export TERM=xterm-256color
 fi
-
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -113,6 +114,7 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 export PATH=/Users/tuomo.virolainen/bin:/usr/local/bin:/Users/tuomo.virolainen/mongodb/mongodb-osx-x86_64-3.6.6/bin:$PATH
+alias v='nvim'
 alias vi='nvim'
 alias vim='nvim'
 source /Users/tuomo.virolainen/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
@@ -132,6 +134,13 @@ alias e='exit'
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=6'
 
+# OPAM configuration
+# . /Users/tuomo.virolainen/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+
+source ~/lupis_pw.sh
+export PATH="$HOME/.jenv/bin:$PATH"
+eval "$(jenv init -)"
+
 # Whenever a command is executed, write it to a global history
 # PROMPT_COMMAND="history -a ~/.zsh_history.global; $PROMPT_COMMAND"
 
@@ -143,5 +152,3 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=6'
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/Users/tuomo.virolainen/.sdkman"
 [[ -s "/Users/tuomo.virolainen/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/tuomo.virolainen/.sdkman/bin/sdkman-init.sh"
-
-source ~/lupis_pw.sh

@@ -61,9 +61,6 @@ let g:slime_default_config = {"socket_name": "default", "target_pane": "{right-o
 " Only the search pattern will pulse
 let g:vim_search_pulse_mode = 'cursor_line'
 
-" Format JSX also in files with .js suffix
-let g:jsx_ext_required = 0
-
 map <C-n> :NERDTreeToggle<CR>
 let NERDTreeShowHidden=1
 
@@ -95,6 +92,10 @@ let g:fzf_action = {
       \ }
 nnoremap <c-p> :FZF<cr>
 
+let g:closetag_filenames = "*.xml,*.html,*.xhtml,*.phtml,*.php,*.jsx,*.js"
+let g:javascript_plugin_jsdoc = 1
+
+au FileType xml,html,phtml,php,xhtml,js let b:delimitMate_matchpairs = "(:),[:],{:}"
 
 """""""""""""""""""
 " APPEARANCE      "
@@ -103,7 +104,7 @@ syntax enable
 set termguicolors
 colorscheme gruvbox
 let g:gruvbox_contrast_dark = 'soft'
-set background=dark
+set background=dark " This needs to be set AFTER Gruvbox settings or things will break.
 set cursorline " - Valitun rivin korostus
 set colorcolumn=80
 
@@ -126,6 +127,7 @@ set hidden
 " GENERAL EDITOR SETTINGS   "
 """""""""""""""""""""""""""""
 filetype plugin indent on    " required
+set maxmempattern=2000000
 set regexpengine=1
 set lazyredraw
 set showcmd
@@ -155,9 +157,16 @@ set swapfile
 set wrap
 set nolist  " list disables linebreak
 
+" Format JSX also in files with .js suffix
+let g:jsx_ext_required = 0
+
+
 " Disable netrw for NerdTree
 let g:loaded_netrw       = 1
 let g:loaded_netrwPlugin = 1
+
+au BufNewFile,BufRead *.boot set filetype=clojure
+autocmd Filetype javascript setlocal ts=2 sw=2 sts=2 expandtab
 
 " Save temporary/backup files not in the local directory, but in your ~/.vim
 " directory, to keep them out of git repos.
@@ -281,24 +290,7 @@ set wildignore+=tags
 set wildignore+=*.tar.*
 
 set wildignorecase
-
-set maxmempattern=2000000
-
-let g:closetag_filenames = "*.xml,*.html,*.xhtml,*.phtml,*.php,*.jsx,*.js"
-au FileType xml,html,phtml,php,xhtml,js let b:delimitMate_matchpairs = "(:),[:],{:}"
-
-autocmd Filetype javascript setlocal ts=2 sw=2 sts=2 expandtab
-
-let g:javascript_plugin_jsdoc = 1
 set wildignore+=*/node_modules/*     " MacOSX/Linux
-
-let g:ctrlp_custom_ignore = 'node_modules\|out\|target\|git'
-
-" Settings for vim-smooth-scroll
-" noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
-" noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
-" noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
-" noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
 
 " Trim unwanted whitespaces by :call TrimWhiteSpace()
 fun! TrimWhitespace()
@@ -323,5 +315,3 @@ command! Scandics call Scandics()
 
 " A shorter way: :Siivous
 command! Siivous call TrimWhitespace()
-
-au BufNewFile,BufRead *.boot set filetype=clojure
