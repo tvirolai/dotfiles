@@ -1,3 +1,7 @@
+" This allows buffers to be hidden if you've modified a buffer.
+" This is almost a must if you wish to use buffers in this way.
+" Required for operations modifying multiple buffers like rename.
+set hidden
 set nocompatible              " be iMproved, required
 
 " Plugins are defined here using plug-vim
@@ -44,6 +48,9 @@ Plug 'reasonml-editor/vim-reason-plus'
 Plug 'wellle/targets.vim'
 Plug 'rust-lang/rust.vim'
 Plug 'jpalardy/vim-slime'
+Plug 'thiagoalessio/rainbow_levels.vim'
+Plug 'tpope/vim-fugitive'
+" Plug 'vim-ctrlspace/vim-ctrlspace'
 call plug#end()
 
 
@@ -78,6 +85,9 @@ let g:LanguageClient_serverCommands = {
 " enable autocomplete
 let g:deoplete#enable_at_startup = 1
 
+" Required by ctrlspace
+" let g:CtrlSpaceDefaultMappingKey = "¨"
+
 nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 " Or map each action separately
 nnoremap <silent> gj :call LanguageClient#textDocument_hover()<CR>
@@ -102,9 +112,11 @@ au FileType xml,html,phtml,php,xhtml,js let b:delimitMate_matchpairs = "(:),[:],
 """""""""""""""""""
 syntax enable
 set termguicolors
+
 colorscheme gruvbox
 let g:gruvbox_contrast_dark = 'soft'
 set background=dark " This needs to be set AFTER Gruvbox settings or things will break.
+
 set cursorline " - Valitun rivin korostus
 set colorcolumn=80
 
@@ -117,17 +129,12 @@ let g:airline#extensions#tabline#buffer_nr_show = 1
 " Show just the filename
 let g:airline#extensions#tabline#fnamemod = ':t'
 
-" This allows buffers to be hidden if you've modified a buffer.
-" This is almost a must if you wish to use buffers in this way.
-" Required for operations modifying multiple buffers like rename.
-set hidden
-
 
 """""""""""""""""""""""""""""
 " GENERAL EDITOR SETTINGS   "
 """""""""""""""""""""""""""""
 filetype plugin indent on    " required
-set maxmempattern=2000000
+" set maxmempattern=2000000
 set regexpengine=1
 set lazyredraw
 set showcmd
