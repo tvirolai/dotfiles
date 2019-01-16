@@ -237,9 +237,9 @@ nmap ö :w<CR>
 
 " Close a buffer quickly by pressing å in normal mode (without closing open
 " windows!)
-nmap å :bp<bar>sp<bar>bn<bar>bd<CR>
+nmap Å :bp<bar>sp<bar>bn<bar>bd<CR>
 " This version closes splits:
-" nmap å :bd<CR>
+nmap å :bd!<CR>
 
 " Switch buffers by name/number the same way as in Spacemacs - space b b.
 nmap <leader>bb :b<Space>
@@ -248,7 +248,7 @@ nmap <leader>bb :b<Space>
 " Compile Clojure namespace by pressing §
 nmap § :Require<CR>
 " run tests with Å
-nmap Å :RunTests<CR>
+" nmap Å :RunTests<CR>
 " Jump to definition by pressing Ö on symbol
 nmap Ö ]<C-d>
 " Evaluate form under cursor by pressing °
@@ -261,6 +261,22 @@ endfunction
 " Toggle between two latest buffers by pressing TAB
 nmap <Tab> :call SwitchBuffer()<CR>
 
+" fugitive git bindings
+nnoremap <leader>ga :Git add %:p<CR><CR>
+nnoremap <leader>gs :Gstatus<CR>
+nnoremap <leader>gc :Gcommit -v -q<CR>
+nnoremap <leader>gt :Gcommit -v -q %:p<CR>
+nnoremap <leader>gd :Gdiff<CR>
+nnoremap <leader>ge :Gedit<CR>
+nnoremap <leader>gr :Gread<CR>
+nnoremap <leader>gw :Gwrite<CR><CR>
+nnoremap <leader>gl :silent! Glog<CR>:bot copen<CR>
+nnoremap <leader>gp :Ggrep<Space>
+nnoremap <leader>gm :Gmove<Space>
+nnoremap <leader>gb :Git branch<Space>
+nnoremap <leader>go :Git checkout<Space>
+nnoremap <leader>gps :Dispatch! git push<CR>
+nnoremap <leader>gpl :Dispatch! git pull<CR>
 
 """"""""""""
 " VARIOUS  "
