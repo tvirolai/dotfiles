@@ -50,6 +50,8 @@ Plug 'rust-lang/rust.vim'
 Plug 'jpalardy/vim-slime'
 Plug 'thiagoalessio/rainbow_levels.vim'
 Plug 'tpope/vim-fugitive'
+Plug 'ElmCast/elm-vim'
+Plug 'junegunn/gv.vim'
 " Plug 'vim-ctrlspace/vim-ctrlspace'
 call plug#end()
 
@@ -87,6 +89,9 @@ let g:deoplete#enable_at_startup = 1
 
 " Required by ctrlspace
 " let g:CtrlSpaceDefaultMappingKey = "¨"
+
+nnoremap ¨ /
+nnoremap ^ :
 
 nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 " Or map each action separately
@@ -270,13 +275,15 @@ nnoremap <leader>gd :Gdiff<CR>
 nnoremap <leader>ge :Gedit<CR>
 nnoremap <leader>gr :Gread<CR>
 nnoremap <leader>gw :Gwrite<CR><CR>
-nnoremap <leader>gl :silent! Glog<CR>:bot copen<CR>
+nnoremap <leader>gl :Git reflog<CR>
 nnoremap <leader>gp :Ggrep<Space>
 nnoremap <leader>gm :Gmove<Space>
-nnoremap <leader>gb :Git branch<Space>
+nnoremap <leader>gb :Gblame<CR>
+nnoremap <leader>gbr :Git branch<Space>
 nnoremap <leader>go :Git checkout<Space>
-nnoremap <leader>gps :Dispatch! git push<CR>
-nnoremap <leader>gpl :Dispatch! git pull<CR>
+" nnoremap <leader>gffs :Git flow feature start<CR>
+nnoremap <leader>gps :Gpush<CR>
+nnoremap <leader>gpl :Gpull<CR>
 
 """"""""""""
 " VARIOUS  "
