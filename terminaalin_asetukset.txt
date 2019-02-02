@@ -1,3 +1,4 @@
 - iTerm2
 - SF Mono 11pt
 - OneHalfDark
+- "Use thin strokes for anti-aliased text": always
