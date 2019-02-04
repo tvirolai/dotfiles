@@ -3,6 +3,7 @@
 " Required for operations modifying multiple buffers like rename.
 set hidden
 set nocompatible              " be iMproved, required
+set nofoldenable
 
 " Plugins are defined here using plug-vim
 call plug#begin('~/.config/nvim/bundle')
@@ -285,6 +286,7 @@ nnoremap <leader>go :Git checkout<Space>
 nnoremap <leader>gps :Gpush<CR>
 nnoremap <leader>gpl :Gpull<CR>
 
+nnoremap <leader>gv :GV<CR>
 """"""""""""
 " VARIOUS  "
 """"""""""""
