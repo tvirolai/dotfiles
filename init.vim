@@ -56,6 +56,8 @@ Plug 'junegunn/gv.vim'
 Plug 'junegunn/limelight.vim'
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/seoul256.vim'
+Plug 'cocopon/iceberg.vim'
+Plug 'ap/vim-css-color'
 " Plug 'vim-ctrlspace/vim-ctrlspace'
 call plug#end()
 
@@ -122,11 +124,14 @@ au FileType xml,html,phtml,php,xhtml,js let b:delimitMate_matchpairs = "(:),[:],
 syntax enable
 set termguicolors
 
+" colorscheme iceberg
 colorscheme gruvbox
 let g:gruvbox_contrast_dark = 'soft'
 
+" let g:seoul256_background = 236
 " colo seoul256
 set background=dark " This needs to be set AFTER Gruvbox settings or things will break.
+
 
 set cursorline " - Valitun rivin korostus
 set colorcolumn=80

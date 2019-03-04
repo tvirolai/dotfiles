@@ -6,7 +6,10 @@ export ZSH=/Users/tuomo.virolainen/.oh-my-zsh
 export PYENV_ROOT="$HOME/.pyenv"
 export OH_MY_ZSH="$HOME/.oh-my-zsh"
 
-export JAVAFX_HOME="/Library/Java/JavaVirtualMachines/jdk-10.0.2.jdk/Contents/Home/lib"
+# export JAVAFX_HOME="/Library/Java/JavaVirtualMachines/jdk-10.0.2.jdk/Contents/Home/lib"
+export JAVAFX_HOME="/Users/tuomo.virolainen/javafx-sdk-11.0.2/lib"
+
+export OCAML_TOPLEVEL_PATH="/home/tuomo.virolainen/.opam/system/lib/toplevel"
 
 export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
 
@@ -113,11 +116,15 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-export PATH=/Users/tuomo.virolainen/bin:/usr/local/bin:/Users/tuomo.virolainen/mongodb/mongodb-osx-x86_64-3.6.6/bin:$PATH
+export PATH=/Users/tuomo.virolainen/bin:/usr/local/bin:/Users/tuomo.virolainen/mongodb/mongodb-osx-x86_64-3.6.6/bin:/Users/tuomo.virolainen/anaconda3/bin:$PATH
 alias v='nvim'
 alias vi='nvim'
 alias vim='nvim'
 source /Users/tuomo.virolainen/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+alias t='tig'
+
+alias cat='bat'
 
 alias rmcontainers='docker container rm $(docker container stop $(docker container ls -aq))'
 alias rmimages='docker image rm $(docker image ls -aq)'
@@ -136,6 +143,8 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=6'
 
 # OPAM configuration
 # . /Users/tuomo.virolainen/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+
+eval `opam config env`
 
 source ~/lupis_pw.sh
 export PATH="$HOME/.jenv/bin:$PATH"
