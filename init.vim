@@ -58,6 +58,7 @@ Plug 'junegunn/goyo.vim'
 Plug 'junegunn/seoul256.vim'
 Plug 'cocopon/iceberg.vim'
 Plug 'ap/vim-css-color'
+Plug 'dracula/vim'
 " Plug 'vim-ctrlspace/vim-ctrlspace'
 call plug#end()
 
@@ -75,6 +76,8 @@ let g:slime_default_config = {"socket_name": "default", "target_pane": "{right-o
 
 " Only the search pattern will pulse
 let g:vim_search_pulse_mode = 'cursor_line'
+
+let g:clojure_maxlines = 2000
 
 map <C-n> :NERDTreeToggle<CR>
 let NERDTreeShowHidden=1
@@ -219,6 +222,13 @@ let mapleader = "\<Space>"
 let g:NumberToggleTrigger="<F3>"
 
 let g:move_key_modifier = 'C'
+
+" Rebind arrow keys. Up and down circle through to spots in the buffer where
+" text has been last inserted, right goes to the last insert position and
+" jumps to insert mode.
+nnoremap <Up> g;<CR>
+nnoremap <Down> g,<CR>
+nnoremap <Right> gi
 
 " Escape insert mode quickly by typing 'kj'
 inoremap kj <Esc>
