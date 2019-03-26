@@ -59,6 +59,7 @@ Plug 'junegunn/seoul256.vim'
 Plug 'cocopon/iceberg.vim'
 Plug 'ap/vim-css-color'
 Plug 'dracula/vim'
+Plug 'liquidz/vim-iced', {'for': 'clojure'}
 " Plug 'vim-ctrlspace/vim-ctrlspace'
 call plug#end()
 
@@ -66,7 +67,7 @@ call plug#end()
 """""""""""""""""""
 " PLUGIN SETTINGS "
 """""""""""""""""""
-let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
+let g:rainbow_active = 0 "0 if you want to enable it later via :RainbowToggle
 
 " Configure vim-slime to be able to send data from the editor window
 " to the REPL. Here Vim is assumed to be run on the left side of a vertically
@@ -95,9 +96,6 @@ let g:LanguageClient_serverCommands = {
 
 " enable autocomplete
 let g:deoplete#enable_at_startup = 1
-
-" Required by ctrlspace
-" let g:CtrlSpaceDefaultMappingKey = "¨"
 
 nnoremap ¨ /
 nnoremap ^ :
@@ -128,32 +126,54 @@ syntax enable
 set termguicolors
 
 " colorscheme iceberg
+" colorscheme dracula
 colorscheme gruvbox
-let g:gruvbox_contrast_dark = 'soft'
+let g:gruvbox_contrast_dark = 'medium'
+let g:gruvbox_contrast_light = 'medium'
 
 " let g:seoul256_background = 236
 " colo seoul256
 set background=dark " This needs to be set AFTER Gruvbox settings or things will break.
-
+" set background=light
 
 set cursorline " - Valitun rivin korostus
 set colorcolumn=80
 
-" Enable the list of buffers
-let g:airline#extensions#tabline#enabled = 1
+" " Enable the list of buffers
+let g:airline#extensions#tabline#enabled                      = 1
+let g:airline#extensions#tabline#buffer_min_count             = 1
+let g:airline#extensions#tabline#tab_min_count                = 1
+let g:airline#extensions#tabline#buffer_idx_mode              = 1
+let g:airline#extensions#tabline#buffer_nr_show               = 1
+let g:airline#extensions#tabline#show_buffers                 = 1
+let g:airline#extensions#branch#enabled                       = 1
+let g:airline#extensions#tagbar#enabled                       = 1
+let g:airline_powerline_fonts                                 = 1
+let g:airline#extensions#whitespace#enabled       = 0
+let g:airline#extensions#tabline#fnamemod         = ':t'
+let g:airline_section_c                           = '%{fnamemodify(expand("%"), ":~:.")}'
+let g:airline_section_x                           = '%{fnamemodify(getcwd(), ":t")}'
+let g:airline_section_y                           = airline#section#create(['filetype'])
 
-" Show buffer number on tab
-let g:airline#extensions#tabline#buffer_nr_show = 1
+" Easier tab/buffer switching
+nmap <leader>1 <Plug>AirlineSelectTab1
+nmap <leader>2 <Plug>AirlineSelectTab2
+nmap <leader>3 <Plug>AirlineSelectTab3
+nmap <leader>4 <Plug>AirlineSelectTab4
+nmap <leader>5 <Plug>AirlineSelectTab5
+nmap <leader>6 <Plug>AirlineSelectTab6
+nmap <leader>7 <Plug>AirlineSelectTab7
+nmap <leader>8 <Plug>AirlineSelectTab8
+nmap <leader>9 <Plug>AirlineSelectTab9
 
-" Show just the filename
-let g:airline#extensions#tabline#fnamemod = ':t'
-
+nnoremap b :Buffers<CR>
 
 """""""""""""""""""""""""""""
 " GENERAL EDITOR SETTINGS   "
 """""""""""""""""""""""""""""
 filetype plugin indent on    " required
 " set maxmempattern=2000000
+set timeoutlen=500
 set regexpengine=1
 set lazyredraw
 set showcmd
@@ -224,11 +244,12 @@ let g:NumberToggleTrigger="<F3>"
 let g:move_key_modifier = 'C'
 
 " Rebind arrow keys. Up and down circle through to spots in the buffer where
-" text has been last inserted, right goes to the last insert position and
-" jumps to insert mode.
+" text has been last inserted, right goes to the line that was last edited.
+" Left jumps to the last edit point and switches in insert mode.
 nnoremap <Up> g;<CR>
 nnoremap <Down> g,<CR>
-nnoremap <Right> gi
+nnoremap <Right> `.
+nnoremap <Left> gi
 
 " Escape insert mode quickly by typing 'kj'
 inoremap kj <Esc>
@@ -268,17 +289,16 @@ nmap Å :bp<bar>sp<bar>bn<bar>bd<CR>
 nmap å :bd!<CR>
 
 " Switch buffers by name/number the same way as in Spacemacs - space b b.
-nmap <leader>bb :b<Space>
+" nmap <leader>bb :b<Space>
 
 " Clojure-specific bindings
 " Compile Clojure namespace by pressing §
 nmap § :Require<CR>
-" run tests with Å
-" nmap Å :RunTests<CR>
 " Jump to definition by pressing Ö on symbol
 nmap Ö ]<C-d>
-" Evaluate form under cursor by pressing °
-nmap ° cpp<CR>
+" nmap ° cpp<CR>
+" Run tests by pressing °
+nmap ° :RunTests<CR>
 
 function SwitchBuffer()
   b#
@@ -307,34 +327,12 @@ nnoremap <leader>gps :Gpush<CR>
 nnoremap <leader>gpl :Gpull<CR>
 
 nnoremap <leader>gv :GV<CR>
+
 """"""""""""
 " VARIOUS  "
 """"""""""""
 
-" Trying some funky buffer stuff from https://stackoverflow.com/questions/16082991/vim-switching-between-files-rapidly-using-vanilla-vim-no-plugins
-
-set path=.,**
-nnoremap <leader>f :find *
-nnoremap <leader>s :sfind *
-nnoremap <leader>v :vert sfind *
-nnoremap <leader>t :tabfind *
-
-nnoremap <leader>F :find <C-R>=expand('%:h').'/*'<CR>
-nnoremap <leader>S :sfind <C-R>=expand('%:h').'/*'<CR>
-nnoremap <leader>V :vert sfind <C-R>=expand('%:h').'/*'<CR>
-" nnoremap <leader>T :tabfind <C-R>=expand('%:h').'/*'<CR>
-
-set wildcharm=<C-z>
-nnoremap <leader>b :buffer <C-z><S-Tab>
-nnoremap <leader>B :sbuffer <C-z><S-Tab>
-
-nnoremap <PageUp>   :bprevious<CR>
-nnoremap <PageDown> :bnext<CR>
-
-nnoremap <leader>j :tjump /
-
 set wildmode=list:full
-
 set wildignore=*.swp,*.bak
 set wildignore+=*.pyc,*.class,*.sln,*.Master,*.csproj,*.csproj.user,*.cache,*.dll,*.pdb,*.min.*
 set wildignore+=*/.git/**/*,*/.hg/**/*,*/.svn/**/*
