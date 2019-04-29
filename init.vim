@@ -12,15 +12,25 @@ Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
     \ 'do': 'bash install.sh',
     \ }
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+Plug 'mhartington/oceanic-next'
+" Intellisense Engine
+Plug 'neoclide/coc.nvim', { 'do': 'yarn install' }
+Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
+
+" " Denite - Fuzzy finding, buffer management
+" Plug 'Shougo/denite.nvim'
+
+" " Snippet support
+" Plug 'Shougo/neosnippet'
+" Plug 'Shougo/neosnippet-snippets'
 Plug 'guns/vim-clojure-highlight'
 Plug 'SevereOverfl0w/vim-replant', { 'do': ':UpdateRemotePlugins' }
 Plug 'luochen1990/rainbow'
 Plug 'scrooloose/nerdtree'
 Plug 'inside/vim-search-pulse'
-Plug 'pangloss/vim-javascript'
+" Plug 'pangloss/vim-javascript'
 Plug 'alvan/vim-closetag'
 Plug 'tpope/vim-commentary'
 Plug 'matze/vim-move'
@@ -35,7 +45,7 @@ Plug 'guns/vim-sexp'
 Plug 'tpope/vim-sexp-mappings-for-regular-people'
 Plug 'tpope/vim-surround'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer --clang-completer' }
+" Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer --clang-completer' }
 Plug 'jiangmiao/auto-pairs'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'mxw/vim-jsx'
@@ -60,7 +70,9 @@ Plug 'cocopon/iceberg.vim'
 Plug 'ap/vim-css-color'
 Plug 'dracula/vim'
 Plug 'liquidz/vim-iced', {'for': 'clojure'}
-" Plug 'vim-ctrlspace/vim-ctrlspace'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'tssm/fairyfloss.vim'
+Plug 'mbbill/undotree'
 call plug#end()
 
 
@@ -94,11 +106,10 @@ let g:LanguageClient_serverCommands = {
     \ 'reason': ['/usr/local/bin/reason-language-server.exe']
     \ }
 
-" enable autocomplete
-let g:deoplete#enable_at_startup = 1
-
 nnoremap ¨ /
 nnoremap ^ :
+
+cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 
 nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 " Or map each action separately
@@ -125,16 +136,20 @@ au FileType xml,html,phtml,php,xhtml,js let b:delimitMate_matchpairs = "(:),[:],
 syntax enable
 set termguicolors
 
+let g:gruvbox_contrast_dark = 'soft'
+let g:gruvbox_contrast_light = 'medium'
+
+" set background=light
+
 " colorscheme iceberg
 " colorscheme dracula
+" colorscheme OceanicNext
 colorscheme gruvbox
-let g:gruvbox_contrast_dark = 'medium'
-let g:gruvbox_contrast_light = 'medium'
+" colorscheme fairyfloss
+set background=dark
 
 " let g:seoul256_background = 236
 " colo seoul256
-set background=dark " This needs to be set AFTER Gruvbox settings or things will break.
-" set background=light
 
 set cursorline " - Valitun rivin korostus
 set colorcolumn=80
@@ -148,7 +163,7 @@ let g:airline#extensions#tabline#buffer_nr_show               = 1
 let g:airline#extensions#tabline#show_buffers                 = 1
 let g:airline#extensions#branch#enabled                       = 1
 let g:airline#extensions#tagbar#enabled                       = 1
-let g:airline_powerline_fonts                                 = 1
+" let g:airline_powerline_fonts                                 = 1
 let g:airline#extensions#whitespace#enabled       = 0
 let g:airline#extensions#tabline#fnamemod         = ':t'
 let g:airline_section_c                           = '%{fnamemodify(expand("%"), ":~:.")}'
@@ -166,7 +181,7 @@ nmap <leader>7 <Plug>AirlineSelectTab7
 nmap <leader>8 <Plug>AirlineSelectTab8
 nmap <leader>9 <Plug>AirlineSelectTab9
 
-nnoremap b :Buffers<CR>
+nmap ´ :Buffers<CR>
 
 """""""""""""""""""""""""""""
 " GENERAL EDITOR SETTINGS   "
@@ -203,9 +218,16 @@ set swapfile
 set wrap
 set nolist  " list disables linebreak
 
+" enable autocomplete
+" let g:deoplete#enable_at_startup = 1
+
+let g:python_host_prog = $HOME."/.pyenv/versions/2.7.11/envs/neovim2/bin/python"
+" let g:python_host_prog = "/usr/local/bin/python"
+" let g:python3_host_prog = "/usr/local/bin/python3"
+let g:python3_host_prog = $HOME."/.pyenv/versions/3.7.1/envs/neovim3/bin/python3"
+
 " Format JSX also in files with .js suffix
 let g:jsx_ext_required = 0
-
 
 " Disable netrw for NerdTree
 let g:loaded_netrw       = 1
@@ -271,7 +293,7 @@ nmap <leader>h :bprevious<CR>
 nmap <leader>bq :bp <BAR> bd #<CR>
 
 " Show all open buffers and their status
-nmap <leader>bl :ls<CR>
+" nmap <leader>bl :ls<CR>
 
 " Close all other splits except the focused one
 nmap ä :only<CR>
