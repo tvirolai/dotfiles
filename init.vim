@@ -19,9 +19,6 @@ Plug 'mhartington/oceanic-next'
 Plug 'neoclide/coc.nvim', { 'do': 'yarn install' }
 Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
 
-" " Denite - Fuzzy finding, buffer management
-" Plug 'Shougo/denite.nvim'
-
 " " Snippet support
 " Plug 'Shougo/neosnippet'
 " Plug 'Shougo/neosnippet-snippets'
@@ -30,13 +27,14 @@ Plug 'SevereOverfl0w/vim-replant', { 'do': ':UpdateRemotePlugins' }
 Plug 'luochen1990/rainbow'
 Plug 'scrooloose/nerdtree'
 Plug 'inside/vim-search-pulse'
-" Plug 'pangloss/vim-javascript'
 Plug 'alvan/vim-closetag'
 Plug 'tpope/vim-commentary'
 Plug 'matze/vim-move'
 Plug 'vim-airline/vim-airline'
 Plug 'easymotion/vim-easymotion'
 Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+" Plug 'clojure-vim/acid.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'liquidz/vim-iced', {'for': 'clojure'}
 Plug 'tpope/vim-classpath'
 Plug 'tpope/vim-salve'
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
@@ -45,7 +43,6 @@ Plug 'guns/vim-sexp'
 Plug 'tpope/vim-sexp-mappings-for-regular-people'
 Plug 'tpope/vim-surround'
 Plug 'christoomey/vim-tmux-navigator'
-" Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer --clang-completer' }
 Plug 'jiangmiao/auto-pairs'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'mxw/vim-jsx'
@@ -69,7 +66,6 @@ Plug 'junegunn/seoul256.vim'
 Plug 'cocopon/iceberg.vim'
 Plug 'ap/vim-css-color'
 Plug 'dracula/vim'
-Plug 'liquidz/vim-iced', {'for': 'clojure'}
 Plug 'vim-airline/vim-airline-themes'
 Plug 'tssm/fairyfloss.vim'
 Plug 'mbbill/undotree'
@@ -87,16 +83,52 @@ let g:rainbow_active = 0 "0 if you want to enable it later via :RainbowToggle
 let g:slime_target = "tmux"
 let g:slime_default_config = {"socket_name": "default", "target_pane": "{right-of}"}
 
+let g:coc_node_path = "/Users/tuomo.virolainen/.nvm/versions/node/v10.15.0/bin/node"
+
 " Only the search pattern will pulse
 let g:vim_search_pulse_mode = 'cursor_line'
 
-let g:clojure_maxlines = 2000
+let g:clojure_maxlines = 700
+
+let g:clojure_syntax_keywords = {
+    \ 'clojureMacro': ["defcommand", "defraw", "defmonster", "defquery"]
+    \ }
 
 map <C-n> :NERDTreeToggle<CR>
 let NERDTreeShowHidden=1
 
 " Close vim if NerdTree is the last open buffer
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+" Autocomplete settings
+"
+" Better display for messages
+set cmdheight=2
+
+" Smaller updatetime for CursorHold & CursorHoldI
+set updatetime=300
+
+" don't give |ins-completion-menu| messages.
+set shortmess+=c
+
+" always show signcolumns
+set signcolumn=yes
+
+" Use tab for trigger completion with characters ahead and navigate.
+" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion.
+inoremap <silent><expr> <c-space> coc#refresh()
 
 let g:LanguageClient_serverCommands = {
     \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
@@ -171,17 +203,17 @@ let g:airline_section_x                           = '%{fnamemodify(getcwd(), ":t
 let g:airline_section_y                           = airline#section#create(['filetype'])
 
 " Easier tab/buffer switching
-nmap <leader>1 <Plug>AirlineSelectTab1
-nmap <leader>2 <Plug>AirlineSelectTab2
-nmap <leader>3 <Plug>AirlineSelectTab3
-nmap <leader>4 <Plug>AirlineSelectTab4
-nmap <leader>5 <Plug>AirlineSelectTab5
-nmap <leader>6 <Plug>AirlineSelectTab6
-nmap <leader>7 <Plug>AirlineSelectTab7
-nmap <leader>8 <Plug>AirlineSelectTab8
-nmap <leader>9 <Plug>AirlineSelectTab9
+nmap <leader>1 :b1<CR>
+nmap <leader>2 :b2<CR>
+nmap <leader>3 :b3<CR>
+nmap <leader>4 :b4<CR>
+nmap <leader>5 :b5<CR>
+nmap <leader>6 :b6<CR>
+nmap <leader>7 :b7<CR>
+nmap <leader>8 :b8<CR>
+nmap <leader>9 :b9<CR>
 
-nmap ´ :Buffers<CR>
+nmap å :Buffers<CR>
 
 """""""""""""""""""""""""""""
 " GENERAL EDITOR SETTINGS   "
@@ -222,8 +254,6 @@ set nolist  " list disables linebreak
 " let g:deoplete#enable_at_startup = 1
 
 let g:python_host_prog = $HOME."/.pyenv/versions/2.7.11/envs/neovim2/bin/python"
-" let g:python_host_prog = "/usr/local/bin/python"
-" let g:python3_host_prog = "/usr/local/bin/python3"
 let g:python3_host_prog = $HOME."/.pyenv/versions/3.7.1/envs/neovim3/bin/python3"
 
 " Format JSX also in files with .js suffix
@@ -308,10 +338,10 @@ nmap ö :w<CR>
 " windows!)
 nmap Å :bp<bar>sp<bar>bn<bar>bd<CR>
 " This version closes splits:
-nmap å :bd!<CR>
+nmap ´ :bd!<CR>
 
 " Switch buffers by name/number the same way as in Spacemacs - space b b.
-" nmap <leader>bb :b<Space>
+nmap <leader>b :b<Space>
 
 " Clojure-specific bindings
 " Compile Clojure namespace by pressing §
@@ -410,3 +440,5 @@ endfunction
 
 autocmd! User GoyoEnter nested call <SID>goyo_enter()
 autocmd! User GoyoLeave nested call <SID>goyo_leave()
+" Evaluate Clojure buffers on load
+" autocmd BufRead *.clj try | silent! Require | catch /^Fireplace/ | endtry
