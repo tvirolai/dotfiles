@@ -18,10 +18,6 @@ Plug 'mhartington/oceanic-next'
 " Intellisense Engine
 Plug 'neoclide/coc.nvim', { 'do': 'yarn install' }
 Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
-
-" " Snippet support
-" Plug 'Shougo/neosnippet'
-" Plug 'Shougo/neosnippet-snippets'
 Plug 'guns/vim-clojure-highlight'
 Plug 'SevereOverfl0w/vim-replant', { 'do': ':UpdateRemotePlugins' }
 Plug 'luochen1990/rainbow'
@@ -34,7 +30,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'easymotion/vim-easymotion'
 Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 " Plug 'clojure-vim/acid.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'liquidz/vim-iced', {'for': 'clojure'}
+" Plug 'liquidz/vim-iced', {'for': 'clojure'}
 Plug 'tpope/vim-classpath'
 Plug 'tpope/vim-salve'
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
@@ -62,13 +58,11 @@ Plug 'ElmCast/elm-vim'
 Plug 'junegunn/gv.vim'
 Plug 'junegunn/limelight.vim'
 Plug 'junegunn/goyo.vim'
-Plug 'junegunn/seoul256.vim'
-Plug 'cocopon/iceberg.vim'
 Plug 'ap/vim-css-color'
 Plug 'dracula/vim'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'tssm/fairyfloss.vim'
 Plug 'mbbill/undotree'
+Plug 'justinmk/vim-sneak'
 call plug#end()
 
 
@@ -76,6 +70,9 @@ call plug#end()
 " PLUGIN SETTINGS "
 """""""""""""""""""
 let g:rainbow_active = 0 "0 if you want to enable it later via :RainbowToggle
+
+" Jump to next vim-sneak hit by pressing s again
+let g:sneak#s_next = 1
 
 " Configure vim-slime to be able to send data from the editor window
 " to the REPL. Here Vim is assumed to be run on the left side of a vertically
@@ -173,15 +170,8 @@ let g:gruvbox_contrast_light = 'medium'
 
 " set background=light
 
-" colorscheme iceberg
-" colorscheme dracula
-" colorscheme OceanicNext
 colorscheme gruvbox
-" colorscheme fairyfloss
 set background=dark
-
-" let g:seoul256_background = 236
-" colo seoul256
 
 set cursorline " - Valitun rivin korostus
 set colorcolumn=80
@@ -213,7 +203,6 @@ nmap <leader>7 :b7<CR>
 nmap <leader>8 :b8<CR>
 nmap <leader>9 :b9<CR>
 
-nmap å :Buffers<CR>
 
 """""""""""""""""""""""""""""
 " GENERAL EDITOR SETTINGS   "
@@ -330,7 +319,10 @@ nmap ä :only<CR>
 
 " Open Silver Searcher with key Ä
 nmap Ä :Ag<CR>
-"
+
+" List open buffers by pressing å
+nmap å :Buffers<CR>
+
 " Save by pressing ö
 nmap ö :w<CR>
 
@@ -344,6 +336,7 @@ nmap ´ :bd!<CR>
 nmap <leader>b :b<Space>
 
 " Clojure-specific bindings
+
 " Compile Clojure namespace by pressing §
 nmap § :Require<CR>
 " Jump to definition by pressing Ö on symbol
