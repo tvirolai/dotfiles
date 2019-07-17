@@ -24,6 +24,14 @@ export PKG_CONFIG_PATH="${PKG_CONFIG_PATH} /usr/local/opt/zlib/lib/pkgconfig"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
+# mappings for Ctrl-left-arrow and Ctrl-right-arrow for word moving
+# Without these mappings, they will not work in Kitty/Zsh
+bindkey -e
+bindkey "^[[1;3C" forward-word
+bindkey "^[[1;3D" backward-word
+bindkey "ƒ" forward-word
+bindkey "›" backward-word
+
 unset LSCOLORS
 export CLICOLOR=1
 # export CLICOLOR_FORCE=1
@@ -38,7 +46,7 @@ export CLICOLOR=1
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="powerlevel9k/powerlevel9k"
+ZSH_THEME="powerlevel10k/powerlevel10k"
 
 DEFAULT_USER=$USER
 
