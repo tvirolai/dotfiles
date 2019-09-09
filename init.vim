@@ -86,6 +86,8 @@ let g:slime_default_config = {"socket_name": "default", "target_pane": "{right-o
 
 let g:coc_node_path = "/Users/tuomo.virolainen/.nvm/versions/node/v10.15.0/bin/node"
 
+let g:LanguageClient_settingsPath=".lsp/settings.json"
+
 " Trigger a highlight in the appropriate direction when pressing these keys:
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 
@@ -95,7 +97,7 @@ let g:vim_search_pulse_mode = 'cursor_line'
 let g:clojure_maxlines = 700
 
 let g:clojure_syntax_keywords = {
-    \ 'clojureMacro': ["defproject", "defquery", "defapi", "defroutes"]
+    \ 'clojureMacro': ["defproject", "defquery", "defapi", "defroutes", "defrule"]
     \ }
 
 map <C-n> :NERDTreeToggle<CR>
