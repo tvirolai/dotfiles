@@ -10,6 +10,8 @@
 "\e[3D": backward-word
 "3C": forward-word
 "3D": backward-word
+"ƒ": forward-word
+"›": backward-word
 "\e\e[C": forward-word
 "\e\e[D": backward-word
 

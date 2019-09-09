@@ -5,6 +5,8 @@ set hidden
 set nocompatible              " be iMproved, required
 set nofoldenable
 
+set clipboard=unnamedplus " Use system clipboard by default
+
 " Plugins are defined here using plug-vim
 call plug#begin('~/.config/nvim/bundle')
 
@@ -24,6 +26,7 @@ Plug 'luochen1990/rainbow'
 Plug 'scrooloose/nerdtree'
 Plug 'inside/vim-search-pulse'
 Plug 'alvan/vim-closetag'
+Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-commentary'
 Plug 'matze/vim-move'
 Plug 'vim-airline/vim-airline'
@@ -47,32 +50,33 @@ Plug 'neovimhaskell/haskell-vim'
 Plug 'mfukar/robotframework-vim'
 Plug 'elixir-editors/vim-elixir'
 Plug 'jacoborus/tender.vim'
-Plug 'kovisoft/slimv', { 'for': 'lisp' }
+" Plug 'kovisoft/slimv', { 'for': 'lisp' }
 Plug 'reasonml-editor/vim-reason-plus'
 Plug 'wellle/targets.vim'
 Plug 'rust-lang/rust.vim'
 Plug 'jpalardy/vim-slime'
-Plug 'thiagoalessio/rainbow_levels.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'ElmCast/elm-vim'
 Plug 'junegunn/gv.vim'
-Plug 'junegunn/limelight.vim'
-Plug 'junegunn/goyo.vim'
 Plug 'ap/vim-css-color'
 Plug 'dracula/vim'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'mbbill/undotree'
-Plug 'justinmk/vim-sneak'
+Plug 'unblevable/quick-scope'
+Plug 'sainnhe/vim-color-forest-night'
+Plug'l04m33/vlime', {'rtp': 'vim/'}
+" Plug 'Olical/conjure', { 'tag': 'v0.23.0', 'do': 'bin/compile'  }
 call plug#end()
 
 
 """""""""""""""""""
 " PLUGIN SETTINGS "
 """""""""""""""""""
-let g:rainbow_active = 0 "0 if you want to enable it later via :RainbowToggle
+let g:rainbow_active = 0 "enable via :RainbowToggle
 
-" Jump to next vim-sneak hit by pressing s again
-let g:sneak#s_next = 1
+" Remap s and S to EasyMotion movements
+map s <Plug>(easymotion-s)
+map S <Plug>(easymotion-s2)
 
 " Configure vim-slime to be able to send data from the editor window
 " to the REPL. Here Vim is assumed to be run on the left side of a vertically
@@ -82,13 +86,16 @@ let g:slime_default_config = {"socket_name": "default", "target_pane": "{right-o
 
 let g:coc_node_path = "/Users/tuomo.virolainen/.nvm/versions/node/v10.15.0/bin/node"
 
+" Trigger a highlight in the appropriate direction when pressing these keys:
+let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
+
 " Only the search pattern will pulse
 let g:vim_search_pulse_mode = 'cursor_line'
 
 let g:clojure_maxlines = 700
 
 let g:clojure_syntax_keywords = {
-    \ 'clojureMacro': ["defcommand", "defraw", "defmonster", "defquery"]
+    \ 'clojureMacro': ["defproject", "defquery", "defapi", "defroutes"]
     \ }
 
 map <C-n> :NERDTreeToggle<CR>
@@ -163,7 +170,13 @@ au FileType xml,html,phtml,php,xhtml,js let b:delimitMate_matchpairs = "(:),[:],
 " APPEARANCE      "
 """""""""""""""""""
 syntax enable
-set termguicolors
+"set termguicolors
+" Enable true color
+if exists('+termguicolors')
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  set termguicolors
+endif
 
 let g:gruvbox_contrast_dark = 'soft'
 let g:gruvbox_contrast_light = 'medium'
@@ -185,7 +198,7 @@ let g:airline#extensions#tabline#buffer_nr_show               = 1
 let g:airline#extensions#tabline#show_buffers                 = 1
 let g:airline#extensions#branch#enabled                       = 1
 let g:airline#extensions#tagbar#enabled                       = 1
-" let g:airline_powerline_fonts                                 = 1
+let g:airline_powerline_fonts                                 = 1
 let g:airline#extensions#whitespace#enabled       = 0
 let g:airline#extensions#tabline#fnamemod         = ':t'
 let g:airline_section_c                           = '%{fnamemodify(expand("%"), ":~:.")}'
@@ -239,6 +252,8 @@ set swapfile
 set wrap
 set nolist  " list disables linebreak
 
+" set autochdir " Set working directory to the currently open file
+
 " enable autocomplete
 " let g:deoplete#enable_at_startup = 1
 
@@ -279,6 +294,7 @@ endif
 """""""""""""""""""""""
 
 let mapleader = "\<Space>"
+let maplocalleader=","
 
 let g:NumberToggleTrigger="<F3>"
 
@@ -339,17 +355,20 @@ nmap <leader>b :b<Space>
 
 " Compile Clojure namespace by pressing §
 nmap § :Require<CR>
+" Evaluate a Clojure form by °
+nmap ° :Eval<CR>
+
 " Jump to definition by pressing Ö on symbol
 nmap Ö ]<C-d>
 " nmap ° cpp<CR>
 " Run tests by pressing °
-nmap ° :RunTests<CR>
 
 function SwitchBuffer()
   b#
 endfunction
 
 " Toggle between two latest buffers by pressing TAB
+" nmap <Tab> :call SwitchBuffer()<CR>
 nmap <Tab> :call SwitchBuffer()<CR>
 
 " fugitive git bindings
@@ -367,7 +386,6 @@ nnoremap <leader>gm :Gmove<Space>
 nnoremap <leader>gb :Gblame<CR>
 nnoremap <leader>gbr :Git branch<Space>
 nnoremap <leader>go :Git checkout<Space>
-" nnoremap <leader>gffs :Git flow feature start<CR>
 nnoremap <leader>gps :Gpush<CR>
 nnoremap <leader>gpl :Gpull<CR>
 
@@ -394,44 +412,5 @@ fun! TrimWhitespace()
   call winrestview(l:save)
 endfun
 
-" Fix scandinavian chars
-fun! Scandics()
-  let l:save = winsaveview()
-  %s/å/\\u00e5/g
-  %s/Å/\\u00c5/g
-  %s/ä/\\u00e4/g
-  %s/Ä/\\u00c4/g
-  %s/ö/\\u00f6/g
-  %s/Ö/\\u00d6/g
-  call winrestview(l:save)
-endfun
-
-command! Scandics call Scandics()
-
 " A shorter way: :Siivous
 command! Siivous call TrimWhitespace()
-
-function! s:goyo_enter()
-  silent !tmux set status off
-  silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
-  set noshowmode
-  set noshowcmd
-  set scrolloff=999
-  Limelight
-  " ...
-endfunction
-
-function! s:goyo_leave()
-  silent !tmux set status on
-  silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
-  set showmode
-  set showcmd
-  set scrolloff=5
-  Limelight!
-  " ...
-endfunction
-
-autocmd! User GoyoEnter nested call <SID>goyo_enter()
-autocmd! User GoyoLeave nested call <SID>goyo_leave()
-" Evaluate Clojure buffers on load
-" autocmd BufRead *.clj try | silent! Require | catch /^Fireplace/ | endtry
