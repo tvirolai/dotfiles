@@ -119,17 +119,45 @@ This is DEPRECATED, use %s instead." prelude-modules-file))
 (require 'prelude-global-keybindings)
 
 (require 'key-chord)
+
 (key-chord-mode 1)
+(evil-mode 1)
+(prettify-symbols-mode 1)
+
+(setq default-frame-alist '((font . "Fira Code-13")))
+
 (with-eval-after-load 'evil-maps
+                      (define-key evil-normal-state-map (kbd "C-u") #'evil-scroll-up)
                       (define-key evil-normal-state-map (kbd "C-h") #'evil-window-left)
                       (define-key evil-normal-state-map (kbd "C-j") #'evil-window-down)
                       (define-key evil-normal-state-map (kbd "C-k") #'evil-window-up)
                       (define-key evil-normal-state-map (kbd "C-l") #'evil-window-right)
-                      (define-key evil-normal-state-map (kbd "ä") #'spacemacs/alternate-window)
+                      (define-key evil-normal-state-map (kbd "ä") #'delete-other-windows)
                       (define-key evil-normal-state-map (kbd "ö") #'save-buffer)
-                      (define-key evil-normal-state-map (kbd "§") #'cider-eval-buffer)
-                      (define-key evil-normal-state-map (kbd "°") #'cider-test-run-ns-tests)
-                      (define-key evil-normal-state-map (kbd "Ö") #'cider-find-var))
+                      (define-key evil-normal-state-map (kbd "°") #'cider-eval-buffer)
+                      (define-key evil-normal-state-map (kbd "§") #'cider-eval-sexp-at-point)
+                      (define-key evil-normal-state-map (kbd "Ö") #'cider-find-var)
+                      (define-key evil-normal-state-map (kbd "Ä") #'projectile-find-file)
+                      (define-key evil-normal-state-map (kbd "¨") #'evil-search-forward)
+                      (define-key evil-normal-state-map (kbd "SPC h") #'switch-to-prev-buffer)
+                      (define-key evil-normal-state-map (kbd "SPC l") #'switch-to-next-buffer))
+
+(defun setup-input-decode-map ()
+  (define-key input-decode-map (kbd "SPC x") (kbd "C-x"))
+  (define-key input-decode-map (kbd "C-p") (kbd "C-x C-f")))
+
+(setup-input-decode-map)
+
+(add-hook 'tty-setup-hook #'setup-input-decode-map)
+
+(projectile-mode +1)
+(define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+
+(recentf-mode 1)
+(setq recentf-max-menu-items 25)
+(setq recentf-max-saved-items 25)
+(global-set-key "\C-x\ \C-r" 'recentf-open-files)
 
 ;; macOS specific settings
 (when (eq system-type 'darwin)
@@ -170,7 +198,7 @@ This is DEPRECATED, use %s instead." prelude-modules-file))
       mac-command-modifier 'meta
       x-select-enable-clipboard t)
 
-(message "Prelude is ready to do thy bidding, Master %s!" current-user)
+(message "Halipazuippa, mestarini %s" current-user)
 
 ;; Patch security vulnerability in Emacs versions older than 25.3
 (when (version< emacs-version "25.3")

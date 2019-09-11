@@ -8,7 +8,7 @@
                   [jonase/eastwood "0.3.5"]
                   [lein-cloverage "1.0.13"]
                   [refactor-nrepl "2.4.0-SNAPSHOT"]
-                  [cider/cider-nrepl "0.21.1"]
+                  [cider/cider-nrepl "0.22.2"]
                   [venantius/yagni "0.1.7"]
                   [cljfmt "0.6.1"]
                   [lein-cljfmt "0.6.1"]
