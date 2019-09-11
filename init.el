@@ -135,16 +135,25 @@ This is DEPRECATED, use %s instead." prelude-modules-file))
                       (define-key evil-normal-state-map (kbd "ä") #'delete-other-windows)
                       (define-key evil-normal-state-map (kbd "ö") #'save-buffer)
                       (define-key evil-normal-state-map (kbd "°") #'cider-eval-buffer)
-                      (define-key evil-normal-state-map (kbd "§") #'cider-eval-sexp-at-point)
+                      (define-key evil-normal-state-map (kbd "§") #'cider-eval-defun-at-point)
                       (define-key evil-normal-state-map (kbd "Ö") #'cider-find-var)
                       (define-key evil-normal-state-map (kbd "Ä") #'projectile-find-file)
                       (define-key evil-normal-state-map (kbd "¨") #'evil-search-forward)
+                      (define-key evil-normal-state-map (kbd "TAB") #'switch-to-prev-buffer)
+                      (define-key evil-normal-state-map (kbd "´") #'kill-buffer)
+                      (define-key evil-normal-state-map (kbd "K") #'cider-doc)
+                      (define-key evil-normal-state-map (kbd "<") #'sp-backward-barf-sexp)
+                      (define-key evil-normal-state-map (kbd ">") #'sp-forward-barf-sexp)
+                      (define-key evil-normal-state-map (kbd "(") #'sp-backward-slurp-sexp)
+                      (define-key evil-normal-state-map (kbd ")") #'sp-forward-slurp-sexp)
                       (define-key evil-normal-state-map (kbd "SPC h") #'switch-to-prev-buffer)
                       (define-key evil-normal-state-map (kbd "SPC l") #'switch-to-next-buffer))
 
 (defun setup-input-decode-map ()
   (define-key input-decode-map (kbd "SPC x") (kbd "C-x"))
   (define-key input-decode-map (kbd "C-p") (kbd "C-x C-f")))
+
+(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 
 (setup-input-decode-map)
 
@@ -171,16 +180,16 @@ This is DEPRECATED, use %s instead." prelude-modules-file))
 
 ;; the modules
 (if (file-exists-p prelude-modules-file)
-    (progn
-      (load prelude-modules-file)
-      (if (file-exists-p prelude-deprecated-modules-file)
-          (message "Loading new modules configuration, ignoring DEPRECATED prelude-module.el")))
+  (progn
+    (load prelude-modules-file)
+    (if (file-exists-p prelude-deprecated-modules-file)
+      (message "Loading new modules configuration, ignoring DEPRECATED prelude-module.el")))
   (if (file-exists-p prelude-deprecated-modules-file)
-      (progn
-        (load prelude-deprecated-modules-file)
-        (message (format "The use of %s is DEPRECATED! Use %s instead!"
-                         prelude-deprecated-modules-file
-                         prelude-modules-file)))
+    (progn
+      (load prelude-deprecated-modules-file)
+      (message (format "The use of %s is DEPRECATED! Use %s instead!"
+                       prelude-deprecated-modules-file
+                       prelude-modules-file)))
     (message "Missing modules file %s" prelude-modules-file)
     (message "You can get started by copying the bundled example file from sample/prelude-modules.el")))
 
@@ -191,8 +200,8 @@ This is DEPRECATED, use %s instead." prelude-modules-file))
 (when (file-exists-p prelude-personal-dir)
   (message "Loading personal configuration files in %s..." prelude-personal-dir)
   (mapc 'load (delete
-               prelude-modules-file
-               (directory-files prelude-personal-dir 't "^[^#\.].*\\.el$"))))
+                prelude-modules-file
+                (directory-files prelude-personal-dir 't "^[^#\.].*\\.el$"))))
 
 (setq mac-option-modifier nil
       mac-command-modifier 'meta
@@ -203,11 +212,11 @@ This is DEPRECATED, use %s instead." prelude-modules-file))
 ;; Patch security vulnerability in Emacs versions older than 25.3
 (when (version< emacs-version "25.3")
   (with-eval-after-load "enriched"
-    (defun enriched-decode-display-prop (start end &optional param)
-      (list start end))))
+                        (defun enriched-decode-display-prop (start end &optional param)
+                          (list start end))))
 
 (prelude-eval-after-init
- ;; greet the use with some useful tip
- (run-at-time 5 nil 'prelude-tip-of-the-day))
+  ;; greet the use with some useful tip
+  (run-at-time 5 nil 'prelude-tip-of-the-day))
 
 ;;; init.el ends here
