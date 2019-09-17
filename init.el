@@ -126,6 +126,10 @@ This is DEPRECATED, use %s instead." prelude-modules-file))
 
 (setq default-frame-alist '((font . "Fira Code-13")))
 
+(ido-mode 1)
+(setq ido-everywhere t)
+(setq ido-enable-flex-matching t)
+
 (with-eval-after-load 'evil-maps
                       (define-key evil-normal-state-map (kbd "C-u") #'evil-scroll-up)
                       (define-key evil-normal-state-map (kbd "C-h") #'evil-window-left)
@@ -137,7 +141,8 @@ This is DEPRECATED, use %s instead." prelude-modules-file))
                       (define-key evil-normal-state-map (kbd "°") #'cider-eval-buffer)
                       (define-key evil-normal-state-map (kbd "§") #'cider-eval-defun-at-point)
                       (define-key evil-normal-state-map (kbd "Ö") #'cider-find-var)
-                      (define-key evil-normal-state-map (kbd "Ä") #'projectile-find-file)
+                      (define-key evil-normal-state-map (kbd "C-p") #'projectile-find-file)
+                      (define-key evil-normal-state-map (kbd "Ä") #'projectile-ag)
                       (define-key evil-normal-state-map (kbd "¨") #'evil-search-forward)
                       (define-key evil-normal-state-map (kbd "TAB") #'switch-to-prev-buffer)
                       (define-key evil-normal-state-map (kbd "´") #'kill-buffer)
@@ -146,12 +151,19 @@ This is DEPRECATED, use %s instead." prelude-modules-file))
                       (define-key evil-normal-state-map (kbd ">") #'sp-forward-barf-sexp)
                       (define-key evil-normal-state-map (kbd "(") #'sp-backward-slurp-sexp)
                       (define-key evil-normal-state-map (kbd ")") #'sp-forward-slurp-sexp)
+                      (define-key evil-normal-state-map (kbd "g c") #'comment-line)
+                      (define-key evil-normal-state-map (kbd "SPC ,") #'avy-goto-char)
+                      (define-key evil-normal-state-map (kbd "SPC .") #'avy-goto-char-2)
                       (define-key evil-normal-state-map (kbd "SPC h") #'switch-to-prev-buffer)
                       (define-key evil-normal-state-map (kbd "SPC l") #'switch-to-next-buffer))
 
 (defun setup-input-decode-map ()
   (define-key input-decode-map (kbd "SPC x") (kbd "C-x"))
-  (define-key input-decode-map (kbd "C-p") (kbd "C-x C-f")))
+  (define-key input-decode-map (kbd "C-h") (kbd "C-x o"))
+  (define-key input-decode-map (kbd "C-l") (kbd "C-x o"))
+  (define-key input-decode-map (kbd "C-n") (kbd "C-x C-f")))
+
+(evil-set-initial-state 'term-mode 'emacs)
 
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 
