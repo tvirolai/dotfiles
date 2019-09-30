@@ -3,10 +3,14 @@
 
 (require 'key-chord)
 
+(add-to-list 'load-path "~/.emacs.d/evil")
+; (setq evil-disable-insert-state-bindings t)
 (key-chord-mode 1)
 (evil-mode 1)
 (evil-commentary-mode)
 (prettify-symbols-mode 1)
+
+(setq inferior-lisp-program "/usr/local/bin/sbcl")
 
 (require 'smex) ; Not needed if you use package.el
 (smex-initialize)
@@ -26,6 +30,8 @@
 (setq ido-everywhere t)
 (setq ido-enable-flex-matching t)
 
+(setq sentence-end-double-space nil)
+
 (setq backup-directory-alist `(("." . "~/.saves")))
 
 (with-eval-after-load 'evil-maps
@@ -37,6 +43,7 @@
                       (define-key evil-normal-state-map (kbd "ä") #'delete-other-windows)
                       (define-key evil-normal-state-map (kbd "ö") #'save-buffer)
                       (define-key evil-normal-state-map (kbd "°") #'cider-eval-buffer)
+                      (define-key evil-normal-state-map (kbd "M-§") #'cider-eval-buffer)
                       (define-key evil-normal-state-map (kbd "§") #'cider-eval-defun-at-point)
                       (define-key evil-normal-state-map (kbd "Ö") #'cider-find-var)
                       (define-key evil-normal-state-map (kbd "C-p") #'projectile-find-file)
@@ -46,11 +53,6 @@
                       (define-key evil-normal-state-map (kbd "<backtab>") #'switch-to-next-buffer)
                       (define-key evil-normal-state-map (kbd "´") #'kill-buffer)
                       (define-key evil-normal-state-map (kbd "K") #'cider-doc)
-                      ;; (define-key evil-normal-state-map (kbd "<") #'sp-backward-barf-sexp)
-                      ;; (define-key evil-normal-state-map (kbd ">") #'sp-forward-barf-sexp)
-                      ;; (define-key evil-normal-state-map (kbd "(") #'sp-backward-slurp-sexp)
-                      ;; (define-key evil-normal-state-map (kbd ")") #'sp-forward-slurp-sexp)
-                      ;; (define-key evil-normal-state-map (kbd "g c") #'comment-line)
                       (define-key evil-normal-state-map (kbd "SPC ,") #'avy-goto-char)
                       (define-key evil-normal-state-map (kbd "SPC .") #'avy-goto-char-2)
                       (define-key evil-normal-state-map (kbd "SPC h") #'switch-to-prev-buffer)
@@ -84,3 +86,18 @@
 (add-hook 'clojure-mode-hook #'subword-mode)
 (add-hook 'clojure-mode-hook #'linum-mode)
 (add-hook 'clojure-mode-hook #'aggressive-indent-mode)
+
+(defun kill-magit-diff-buffer-in-current-repo (&rest _)
+  "Delete the magit-diff buffer related to the current repo"
+  (let ((magit-diff-buffer-in-current-repo
+          (magit-mode-get-buffer 'magit-diff-mode)))
+    (kill-buffer magit-diff-buffer-in-current-repo)))
+;;
+;; When 'C-c C-c' is pressed in the magit commit message buffer,
+;; delete the magit-diff buffer related to the current repo.
+;;
+(add-hook 'git-commit-setup-hook
+          (lambda ()
+            (add-hook 'with-editor-post-finish-hook
+                      #'kill-magit-diff-buffer-in-current-repo
+                      nil t)))

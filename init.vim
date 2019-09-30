@@ -64,7 +64,8 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'mbbill/undotree'
 Plug 'unblevable/quick-scope'
 Plug 'sainnhe/vim-color-forest-night'
-Plug'l04m33/vlime', {'rtp': 'vim/'}
+Plug 'l04m33/vlime', {'rtp': 'vim/'}
+Plug 'dense-analysis/ale'
 " Plug 'Olical/conjure', { 'tag': 'v0.23.0', 'do': 'bin/compile'  }
 call plug#end()
 
@@ -72,7 +73,10 @@ call plug#end()
 """""""""""""""""""
 " PLUGIN SETTINGS "
 """""""""""""""""""
+let g:python_highlight_all = 0
 let g:rainbow_active = 0 "enable via :RainbowToggle
+
+let g:ale_linters = {'clojure': ['clj-kondo']}
 
 " Remap s and S to EasyMotion movements
 map s <Plug>(easymotion-s)
@@ -140,7 +144,6 @@ let g:LanguageClient_serverCommands = {
     \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
     \ 'javascript': ['/usr/local/bin/javascript-typescript-stdio'],
     \ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
-    \ 'python': ['/usr/local/bin/pyls'],
     \ 'reason': ['/usr/local/bin/reason-language-server.exe']
     \ }
 
@@ -416,3 +419,15 @@ endfun
 
 " A shorter way: :Siivous
 command! Siivous call TrimWhitespace()
+
+fun! StartVlime()
+  execute "!rlwrap sbcl --load /Users/tuomo.virolainen/.config/nvim/bundle/vlime/lisp/start-vlime.lisp"
+endfun
+
+command! Vlime call StartVlime()
+
+augroup LocalVlimeKeys
+  autocmd!
+  autocmd FileType lisp nnoremap <silent> <buffer> §
+        \ :call vlime#plugin#SendToREPL(vlime#ui#CurExprOrAtom())<cr>
+augroup end
