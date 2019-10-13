@@ -3,6 +3,8 @@
 
 (require 'key-chord)
 
+(require 'flycheck-clj-kondo)
+
 (add-to-list 'load-path "~/.emacs.d/evil")
 ; (setq evil-disable-insert-state-bindings t)
 (key-chord-mode 1)
@@ -19,6 +21,8 @@
 (global-set-key (kbd "M-X") 'smex-major-mode-commands)
 ;; This is your old M-x.
 (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
+
+(global-company-mode)
 
 (global-undo-tree-mode)
 (setq undo-tree-auto-save-history t)
@@ -42,17 +46,12 @@
                       (define-key evil-normal-state-map (kbd "C-l") #'evil-window-right)
                       (define-key evil-normal-state-map (kbd "ä") #'delete-other-windows)
                       (define-key evil-normal-state-map (kbd "ö") #'save-buffer)
-                      (define-key evil-normal-state-map (kbd "°") #'cider-eval-buffer)
-                      (define-key evil-normal-state-map (kbd "M-§") #'cider-eval-buffer)
-                      (define-key evil-normal-state-map (kbd "§") #'cider-eval-defun-at-point)
-                      (define-key evil-normal-state-map (kbd "Ö") #'cider-find-var)
                       (define-key evil-normal-state-map (kbd "C-p") #'projectile-find-file)
                       (define-key evil-normal-state-map (kbd "Ä") #'projectile-ag)
                       (define-key evil-normal-state-map (kbd "¨") #'evil-search-forward)
                       (define-key evil-normal-state-map (kbd "TAB") #'switch-to-prev-buffer)
                       (define-key evil-normal-state-map (kbd "<backtab>") #'switch-to-next-buffer)
                       (define-key evil-normal-state-map (kbd "´") #'kill-buffer)
-                      (define-key evil-normal-state-map (kbd "K") #'cider-doc)
                       (define-key evil-normal-state-map (kbd "SPC ,") #'avy-goto-char)
                       (define-key evil-normal-state-map (kbd "SPC .") #'avy-goto-char-2)
                       (define-key evil-normal-state-map (kbd "SPC h") #'switch-to-prev-buffer)
@@ -82,15 +81,41 @@
 (setq recentf-max-saved-items 25)
 (global-set-key "\C-x\ \C-r" 'recentf-open-files)
 
+;; Clojure settings
+
+(defun clojure-mappings ()
+  (define-key evil-normal-state-map (kbd "°") #'cider-eval-buffer)
+  (define-key evil-normal-state-map (kbd "M-§") #'cider-eval-buffer)
+  (define-key evil-normal-state-map (kbd "§") #'cider-eval-defun-at-point)
+  (define-key evil-normal-state-map (kbd "Ö") #'cider-find-var)
+  (define-key evil-normal-state-map (kbd "K") #'cider-doc))
+
 (add-hook 'clojure-mode-hook #'paredit-mode)
 (add-hook 'clojure-mode-hook #'subword-mode)
 (add-hook 'clojure-mode-hook #'linum-mode)
 (add-hook 'clojure-mode-hook #'aggressive-indent-mode)
+(add-hook 'clojure-mode-hook #'flycheck-mode)
+(add-hook 'clojure-mode-hook #'clojure-mappings)
+
+;; Emacs Lisp settings
+
+(defun elisp-mappings ()
+  (define-key evil-normal-state-map (kbd "°") #'eval-buffer)
+  (define-key evil-normal-state-map (kbd "M-§") #'eval-buffer)
+  (define-key evil-normal-state-map (kbd "§") #'eval-defun))
+
+(add-hook 'lisp-mode-hook #'aggressive-indent-mode)
+(add-hook 'lisp-mode-hook #'paredit-mode)
+
+(add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
+(add-hook 'emacs-lisp-mode-hook #'paredit-mode)
+(add-hook 'emacs-lisp-mode-hook #'flycheck-mode)
+(add-hook 'emacs-lisp-mode-hook #'elisp-mappings)
 
 (defun kill-magit-diff-buffer-in-current-repo (&rest _)
   "Delete the magit-diff buffer related to the current repo"
   (let ((magit-diff-buffer-in-current-repo
-          (magit-mode-get-buffer 'magit-diff-mode)))
+         (magit-mode-get-buffer 'magit-diff-mode)))
     (kill-buffer magit-diff-buffer-in-current-repo)))
 ;;
 ;; When 'C-c C-c' is pressed in the magit commit message buffer,
@@ -101,3 +126,13 @@
             (add-hook 'with-editor-post-finish-hook
                       #'kill-magit-diff-buffer-in-current-repo
                       nil t)))
+
+(with-eval-after-load 'magit
+  (defun mu-magit-kill-buffers ()
+    "Restore window configuration and kill all Magit buffers."
+    (interactive)
+    (let ((buffers (magit-mode-get-buffers)))
+      (magit-restore-window-configuration)
+      (mapc #'kill-buffer buffers)))
+
+  (bind-key "q" #'mu-magit-kill-buffers magit-status-mode-map))
