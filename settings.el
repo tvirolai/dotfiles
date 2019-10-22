@@ -1,7 +1,7 @@
 ;;; settings.el --- Custom personal settings
 ;;
 
-(require 'key-chord)
+;; (require 'key-chord)
 
 (require 'flycheck-clj-kondo)
 
@@ -39,30 +39,33 @@
 (setq backup-directory-alist `(("." . "~/.saves")))
 
 (with-eval-after-load 'evil-maps
-                      (define-key evil-normal-state-map (kbd "C-u") #'evil-scroll-up)
-                      (define-key evil-normal-state-map (kbd "C-h") #'evil-window-left)
-                      (define-key evil-normal-state-map (kbd "C-j") #'evil-window-down)
-                      (define-key evil-normal-state-map (kbd "C-k") #'evil-window-up)
-                      (define-key evil-normal-state-map (kbd "C-l") #'evil-window-right)
-                      (define-key evil-normal-state-map (kbd "ä") #'delete-other-windows)
-                      (define-key evil-normal-state-map (kbd "ö") #'save-buffer)
-                      (define-key evil-normal-state-map (kbd "C-p") #'projectile-find-file)
-                      (define-key evil-normal-state-map (kbd "Ä") #'projectile-ag)
-                      (define-key evil-normal-state-map (kbd "¨") #'evil-search-forward)
-                      (define-key evil-normal-state-map (kbd "TAB") #'switch-to-prev-buffer)
-                      (define-key evil-normal-state-map (kbd "<backtab>") #'switch-to-next-buffer)
-                      (define-key evil-normal-state-map (kbd "´") #'kill-buffer)
-                      (define-key evil-normal-state-map (kbd "SPC ,") #'avy-goto-char)
-                      (define-key evil-normal-state-map (kbd "SPC .") #'avy-goto-char-2)
-                      (define-key evil-normal-state-map (kbd "SPC h") #'switch-to-prev-buffer)
-                      (define-key evil-normal-state-map (kbd "SPC l") #'switch-to-next-buffer))
+  (define-key evil-normal-state-map (kbd "C-u") #'evil-scroll-up)
+  (define-key evil-normal-state-map (kbd "C-h") #'evil-window-left)
+  (define-key evil-normal-state-map (kbd "C-j") #'evil-window-down)
+  (define-key evil-normal-state-map (kbd "C-k") #'evil-window-up)
+  (define-key evil-normal-state-map (kbd "C-l") #'evil-window-right)
+  (define-key evil-normal-state-map (kbd "ä") #'delete-other-windows)
+  (define-key evil-normal-state-map (kbd "ö") #'save-buffer)
+  (define-key evil-normal-state-map (kbd "C-p") #'projectile-find-file)
+  (define-key evil-normal-state-map (kbd "Ä") #'projectile-ag)
+  (define-key evil-normal-state-map (kbd "¨") #'evil-search-forward)
+  (define-key evil-normal-state-map (kbd "TAB") #'switch-to-prev-buffer)
+  (define-key evil-normal-state-map (kbd "<backtab>") #'switch-to-next-buffer)
+  (define-key evil-normal-state-map (kbd "´") #'kill-buffer)
+  (define-key evil-normal-state-map (kbd "SPC ,") #'avy-goto-char)
+  (define-key evil-normal-state-map (kbd "SPC .") #'avy-goto-char-2)
+  (define-key evil-normal-state-map (kbd "SPC h") #'switch-to-prev-buffer)
+  (define-key evil-normal-state-map (kbd "SPC l") #'switch-to-next-buffer)
+  (define-key evil-normal-state-map (kbd "Q") #'kill-buffer-and-window))
 
 (defun setup-input-decode-map ()
   (define-key input-decode-map (kbd "SPC x") (kbd "C-x"))
   (define-key input-decode-map (kbd "C-h") (kbd "C-x o"))
   (define-key input-decode-map (kbd "C-l") (kbd "C-x o"))
   (define-key input-decode-map (kbd "C-b") (kbd "C-x b"))
-  (define-key input-decode-map (kbd "C-n") (kbd "C-x C-f")))
+  (define-key input-decode-map (kbd "C-n") (kbd "C-x C-f"))
+  (define-key input-decode-map (kbd "C-M-<left>") #'switch-to-prev-buffer)
+  (define-key input-decode-map (kbd "C-M-<right>") #'switch-to-next-buffer))
 
 (evil-set-initial-state 'term-mode 'emacs)
 
@@ -88,6 +91,7 @@
   (define-key evil-normal-state-map (kbd "M-§") #'cider-eval-buffer)
   (define-key evil-normal-state-map (kbd "§") #'cider-eval-defun-at-point)
   (define-key evil-normal-state-map (kbd "Ö") #'cider-find-var)
+  (define-key evil-normal-state-map (kbd "q") #'cider-popup-buffer-quit)
   (define-key evil-normal-state-map (kbd "K") #'cider-doc))
 
 (add-hook 'clojure-mode-hook #'paredit-mode)
@@ -105,10 +109,10 @@
   (define-key evil-normal-state-map (kbd "§") #'eval-defun))
 
 (add-hook 'lisp-mode-hook #'aggressive-indent-mode)
-(add-hook 'lisp-mode-hook #'paredit-mode)
+(add-hook 'lisp-mode-hook #'evil-cleverparens-mode)
 
 (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
-(add-hook 'emacs-lisp-mode-hook #'paredit-mode)
+(add-hook 'emacs-lisp-mode-hook #'evil-cleverparens-mode)
 (add-hook 'emacs-lisp-mode-hook #'flycheck-mode)
 (add-hook 'emacs-lisp-mode-hook #'elisp-mappings)
 
@@ -136,3 +140,10 @@
       (mapc #'kill-buffer buffers)))
 
   (bind-key "q" #'mu-magit-kill-buffers magit-status-mode-map))
+
+(defun enable-evil ()
+  (evil-mode 1))
+
+(evil-set-initial-state 'cider-repl-mode 'emacs)
+(add-hook 'cider-repl-mode-hook #'paredit-mode)
+(evil-set-initial-state 'cider-test-report-mode 'emacs)
