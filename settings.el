@@ -12,7 +12,11 @@
 (evil-commentary-mode)
 (prettify-symbols-mode 1)
 
-(setq inferior-lisp-program "/usr/local/bin/sbcl")
+(package-initialize)
+(require 'slime-autoloads)
+
+(setq inferior-lisp-program "/usr/local/bin/sbcl" ; Steel Bank Common Lisp
+      slime-contribs '(slime-fancy))
 
 (require 'smex) ; Not needed if you use package.el
 (smex-initialize)
@@ -45,6 +49,7 @@
   (define-key evil-normal-state-map (kbd "C-k") #'evil-window-up)
   (define-key evil-normal-state-map (kbd "C-l") #'evil-window-right)
   (define-key evil-normal-state-map (kbd "ä") #'delete-other-windows)
+  (define-key evil-normal-state-map (kbd "C-ä") #'split-window-right)
   (define-key evil-normal-state-map (kbd "ö") #'save-buffer)
   (define-key evil-normal-state-map (kbd "C-p") #'projectile-find-file)
   (define-key evil-normal-state-map (kbd "Ä") #'projectile-ag)
@@ -108,8 +113,14 @@
   (define-key evil-normal-state-map (kbd "M-§") #'eval-buffer)
   (define-key evil-normal-state-map (kbd "§") #'eval-defun))
 
+(defun clisp-mappings ()
+  (define-key evil-normal-state-map (kbd "°") #'slime-eval-buffer)
+  (define-key evil-normal-state-map (kbd "M-§") #'slime-eval-buffer)
+  (define-key evil-normal-state-map (kbd "§") #'slime-eval-defun))
+
 (add-hook 'lisp-mode-hook #'aggressive-indent-mode)
 (add-hook 'lisp-mode-hook #'evil-cleverparens-mode)
+(add-hook 'lisp-mode-hook #'clisp-mappings)
 
 (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
 (add-hook 'emacs-lisp-mode-hook #'evil-cleverparens-mode)
@@ -147,3 +158,4 @@
 (evil-set-initial-state 'cider-repl-mode 'emacs)
 (add-hook 'cider-repl-mode-hook #'paredit-mode)
 (evil-set-initial-state 'cider-test-report-mode 'emacs)
+(evil-set-initial-state 'slime-repl-mode 'emacs)
