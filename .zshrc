@@ -5,29 +5,67 @@
 export ZSH=/Users/tuomo.virolainen/.oh-my-zsh
 export PYENV_ROOT="$HOME/.pyenv"
 export OH_MY_ZSH="$HOME/.oh-my-zsh"
+export PYTHON_BUILD_MIRROR_URL="http://yyuu.github.io/pythons/"
 
-# export JAVAFX_HOME="/Library/Java/JavaVirtualMachines/jdk-10.0.2.jdk/Contents/Home/lib"
 export JAVAFX_HOME="/Users/tuomo.virolainen/javafx-sdk-11.0.2/lib"
 
 export OCAML_TOPLEVEL_PATH="/home/tuomo.virolainen/.opam/system/lib/toplevel"
 
 export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
 
+# For compilers to find zlib you may need to set:
+export LDFLAGS="${LDFLAGS} -L/usr/local/opt/zlib/lib"
+export CPPFLAGS="${CPPFLAGS} -I/usr/local/opt/zlib/include"
+
+# For pkg-config to find zlib you may need to set:
+export PKG_CONFIG_PATH="${PKG_CONFIG_PATH} /usr/local/opt/zlib/lib/pkgconfig"
+
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
+# mappings for Ctrl-left-arrow and Ctrl-right-arrow for word moving
+# Without these mappings, they will not work in Kitty/Zsh
+bindkey -e
+bindkey "^[[1;3C" forward-word
+bindkey "^[[1;3D" backward-word
+# bindkey "\e\e[1;3C" forward-word
+# bindkey "[1;3D" backward-word
+# bindkey "\e\e^[1;3C" forward-word
+# bindkey "^[1;3D" backward-word
+# bindkey "\e\e3C" forward-word
+# bindkey "3D" backward-word
+# bindkey "\e[1;5C": forward-word
+# bindkey "\e[1;5D": backward-word
+# bindkey "\e[5C": forward-word
+# bindkey "\e[5D": backward-word
+# bindkey "\e[1;3C": forward-word
+# bindkey "\e[1;3D": backward-word
+# bindkey "\e3C": forward-word
+# bindkey "\e3D": backward-word
+# bindkey "\e\e[C": forward-word
+# bindkey "\e\e[D": backward-word
+
+autoload -Uz zkbd
+bindkey -v
+
+[[ -n "${key[C-Left]}" ]]  && bindkey "${key[C-Left]}"  backward-word
+[[ -n "${key[C-Right]}" ]] && bindkey "${key[C-Right]}" forward-word
+
 unset LSCOLORS
 export CLICOLOR=1
 # export CLICOLOR_FORCE=1
 
 # set 256 color profile where possible
-if [[ $COLORTERM == gnome-* && $TERM == xterm ]] && infocmp gnome-256color >/dev/null 2>&1; then
-    export TERM=gnome-256color
-elif infocmp xterm-256color >/dev/null 2>&1; then
-    export TERM=xterm-256color
-fi
+# if [[ $COLORTERM == gnome-* && $TERM == xterm ]] && infocmp gnome-256color >/dev/null 2>&1; then
+#     export TERM=gnome-256color
+# elif infocmp xterm-256color >/dev/null 2>&1; then
+#     export TERM=xterm-256color
+# fi
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="powerlevel9k/powerlevel9k"
+ZSH_THEME="powerlevel10k/powerlevel10k"
 
 DEFAULT_USER=$USER
 
@@ -116,15 +154,18 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-export PATH=/Users/tuomo.virolainen/bin:/usr/local/bin:/Users/tuomo.virolainen/mongodb/mongodb-osx-x86_64-3.6.6/bin:/Users/tuomo.virolainen/anaconda3/bin:$PATH
 alias v='nvim'
 alias vi='nvim'
 alias vim='nvim'
 source /Users/tuomo.virolainen/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
+alias rsbcl='rlwrap sbcl'
+
 alias t='tig'
 
 alias cat='bat'
+
+alias grep='rg'
 
 alias rmcontainers='docker container rm $(docker container stop $(docker container ls -aq))'
 alias rmimages='docker image rm $(docker image ls -aq)'
@@ -135,7 +176,8 @@ export NVM_DIR="$HOME/.nvm"
 
 . /Users/tuomo.virolainen/bin/z.sh
 
-alias l='exa -la'
+alias l='exa -la --header --git'
+alias ls='exa'
 alias c='clear'
 alias e='exit'
 
@@ -146,7 +188,6 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=6'
 
 eval `opam config env`
 
-source ~/lupis_pw.sh
 export PATH="$HOME/.jenv/bin:$PATH"
 eval "$(jenv init -)"
 
@@ -158,6 +199,32 @@ eval "$(jenv init -)"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# Source chtf
+if [[ -f /usr/local/share/chtf/chtf.sh ]]; then
+    source "/usr/local/share/chtf/chtf.sh"
+fi
+
+eval $(thefuck --alias)
+
+
+export LC_ALL=en_US.UTF-8
+
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/Users/tuomo.virolainen/.sdkman"
 [[ -s "/Users/tuomo.virolainen/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/tuomo.virolainen/.sdkman/bin/sdkman-init.sh"
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/Users/tuomo.virolainen/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/Users/tuomo.virolainen/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/Users/tuomo.virolainen/anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/Users/tuomo.virolainen/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+

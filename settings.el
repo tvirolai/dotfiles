@@ -5,11 +5,14 @@
 
 (require 'flycheck-clj-kondo)
 
+(superword-mode 1)
+
 (add-to-list 'load-path "~/.emacs.d/evil")
 ; (setq evil-disable-insert-state-bindings t)
 (key-chord-mode 1)
 (evil-mode 1)
-(evil-commentary-mode)
+(evil-commentary-mode 1)
+(evil-visual-mark-mode 1)
 (prettify-symbols-mode 1)
 
 (package-initialize)
@@ -29,6 +32,7 @@
 (global-company-mode)
 
 (global-undo-tree-mode)
+
 (setq undo-tree-auto-save-history t)
 (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo")))
 
@@ -61,20 +65,24 @@
   (define-key evil-normal-state-map (kbd "SPC .") #'avy-goto-char-2)
   (define-key evil-normal-state-map (kbd "SPC h") #'switch-to-prev-buffer)
   (define-key evil-normal-state-map (kbd "SPC l") #'switch-to-next-buffer)
-  (define-key evil-normal-state-map (kbd "Q") #'kill-buffer-and-window))
+  (define-key evil-normal-state-map (kbd "Q") #'kill-buffer-and-window)
+  (define-key evil-normal-state-map (kbd "C-M-b") #'ibuffer))
 
 (defun setup-input-decode-map ()
   (define-key input-decode-map (kbd "SPC x") (kbd "C-x"))
+  (define-key input-decode-map (kbd "SPC c") (kbd "C-c"))
+  (define-key input-decode-map (kbd "SPC f") (kbd "C-f"))
   (define-key input-decode-map (kbd "C-h") (kbd "C-x o"))
   (define-key input-decode-map (kbd "C-l") (kbd "C-x o"))
   (define-key input-decode-map (kbd "C-b") (kbd "C-x b"))
   (define-key input-decode-map (kbd "C-n") (kbd "C-x C-f"))
-  (define-key input-decode-map (kbd "C-M-<left>") #'switch-to-prev-buffer)
-  (define-key input-decode-map (kbd "C-M-<right>") #'switch-to-next-buffer))
+  (define-key input-decode-map (kbd "C-M-<left>") (kbd "C-x <left>"))
+  (define-key input-decode-map (kbd "C-M-<right>") (kbd "C-x <right>")))
 
 (evil-set-initial-state 'term-mode 'emacs)
 
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+(add-hook 'prog-mode-hook #'whitespace-mode)
 
 (setup-input-decode-map)
 
@@ -85,6 +93,7 @@
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 
 (recentf-mode 1)
+
 (setq recentf-max-menu-items 25)
 (setq recentf-max-saved-items 25)
 (global-set-key "\C-x\ \C-r" 'recentf-open-files)
@@ -119,11 +128,11 @@
   (define-key evil-normal-state-map (kbd "§") #'slime-eval-defun))
 
 (add-hook 'lisp-mode-hook #'aggressive-indent-mode)
-(add-hook 'lisp-mode-hook #'evil-cleverparens-mode)
+(add-hook 'lisp-mode-hook #'paredit-mode)
 (add-hook 'lisp-mode-hook #'clisp-mappings)
 
 (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
-(add-hook 'emacs-lisp-mode-hook #'evil-cleverparens-mode)
+(add-hook 'emacs-lisp-mode-hook #'paredit-mode)
 (add-hook 'emacs-lisp-mode-hook #'flycheck-mode)
 (add-hook 'emacs-lisp-mode-hook #'elisp-mappings)
 
@@ -159,3 +168,28 @@
 (add-hook 'cider-repl-mode-hook #'paredit-mode)
 (evil-set-initial-state 'cider-test-report-mode 'emacs)
 (evil-set-initial-state 'slime-repl-mode 'emacs)
+(evil-set-initial-state 'eshell-mode 'emacs)
+(add-hook 'slime-repl-mode-hook #'paredit-mode)
+
+(add-hook 'json-mode-hook
+          (lambda ()
+            (make-local-variable 'js-indent-level)
+            (setq js-indent-level 2)))
+
+;; Use system tmp directory for backup files
+(setq backup-directory-alist
+      `((".*" . ,temporary-file-directory)))
+(setq auto-save-file-name-transforms
+      `((".*" ,temporary-file-directory t)))
+
+;; Purge old backup files
+
+(message "Deleting old backup files...")
+(let ((week (* 60 60 24 7))
+      (current (float-time (current-time))))
+  (dolist (file (directory-files temporary-file-directory t))
+    (when (and (backup-file-name-p file)
+               (> (- current (float-time (fifth (file-attributes file))))
+                  week))
+      (message "%s" file)
+      (delete-file file))))

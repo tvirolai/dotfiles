@@ -7,7 +7,8 @@ export PYENV_ROOT="$HOME/.pyenv"
 export OH_MY_ZSH="$HOME/.oh-my-zsh"
 export PYTHON_BUILD_MIRROR_URL="http://yyuu.github.io/pythons/"
 
-# export JAVAFX_HOME="/Library/Java/JavaVirtualMachines/jdk-10.0.2.jdk/Contents/Home/lib"
+export LEIN_USE_BOOTCLASSPATH=no lein repl
+
 export JAVAFX_HOME="/Users/tuomo.virolainen/javafx-sdk-11.0.2/lib"
 
 export OCAML_TOPLEVEL_PATH="/home/tuomo.virolainen/.opam/system/lib/toplevel"
@@ -29,8 +30,28 @@ eval "$(pyenv virtualenv-init -)"
 bindkey -e
 bindkey "^[[1;3C" forward-word
 bindkey "^[[1;3D" backward-word
-bindkey "ƒ" forward-word
-bindkey "›" backward-word
+# bindkey "\e\e[1;3C" forward-word
+# bindkey "[1;3D" backward-word
+# bindkey "\e\e^[1;3C" forward-word
+# bindkey "^[1;3D" backward-word
+# bindkey "\e\e3C" forward-word
+# bindkey "3D" backward-word
+# bindkey "\e[1;5C": forward-word
+# bindkey "\e[1;5D": backward-word
+# bindkey "\e[5C": forward-word
+# bindkey "\e[5D": backward-word
+# bindkey "\e[1;3C": forward-word
+# bindkey "\e[1;3D": backward-word
+# bindkey "\e3C": forward-word
+# bindkey "\e3D": backward-word
+# bindkey "\e\e[C": forward-word
+# bindkey "\e\e[D": backward-word
+
+autoload -Uz zkbd
+bindkey -v
+
+[[ -n "${key[C-Left]}" ]]  && bindkey "${key[C-Left]}"  backward-word
+[[ -n "${key[C-Right]}" ]] && bindkey "${key[C-Right]}" forward-word
 
 unset LSCOLORS
 export CLICOLOR=1
@@ -140,9 +161,13 @@ alias vi='nvim'
 alias vim='nvim'
 source /Users/tuomo.virolainen/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
+alias rsbcl='rlwrap sbcl'
+
 alias t='tig'
 
 alias cat='bat'
+
+alias grep='rg'
 
 alias rmcontainers='docker container rm $(docker container stop $(docker container ls -aq))'
 alias rmimages='docker image rm $(docker image ls -aq)'
@@ -180,6 +205,8 @@ eval "$(jenv init -)"
 if [[ -f /usr/local/share/chtf/chtf.sh ]]; then
     source "/usr/local/share/chtf/chtf.sh"
 fi
+
+eval $(thefuck --alias)
 
 export LC_ALL=en_US.UTF-8
 
