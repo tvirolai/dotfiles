@@ -1,8 +1,6 @@
 ;;; settings.el --- Custom personal settings
 ;;
 
-;; (require 'key-chord)
-
 (require 'flycheck-clj-kondo)
 
 (superword-mode 1)
@@ -23,11 +21,6 @@
 
 (require 'smex) ; Not needed if you use package.el
 (smex-initialize)
-
-(global-set-key (kbd "M-x") 'smex)
-(global-set-key (kbd "M-X") 'smex-major-mode-commands)
-;; This is your old M-x.
-(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
 
 (global-company-mode)
 
@@ -60,7 +53,7 @@
   (define-key evil-normal-state-map (kbd "¨") #'evil-search-forward)
   (define-key evil-normal-state-map (kbd "TAB") #'switch-to-prev-buffer)
   (define-key evil-normal-state-map (kbd "<backtab>") #'switch-to-next-buffer)
-  (define-key evil-normal-state-map (kbd "´") #'kill-buffer)
+  ;; (define-key evil-normal-state-map (kbd "´") #'kill-buffer)
   (define-key evil-normal-state-map (kbd "SPC ,") #'avy-goto-char)
   (define-key evil-normal-state-map (kbd "SPC .") #'avy-goto-char-2)
   (define-key evil-normal-state-map (kbd "SPC h") #'switch-to-prev-buffer)
@@ -81,8 +74,30 @@
 
 (evil-set-initial-state 'term-mode 'emacs)
 
+(defun reverse-transpose-sexps (arg)
+  (interactive "*p")
+  (transpose-sexps (- arg))
+  ;; when transpose-sexps can no longer transpose, it throws an error and code
+  ;; below this line won't be executed. So, we don't have to worry about side
+  ;; effects of backward-sexp and forward-sexp.
+  (backward-sexp (1+ arg))
+  (forward-sexp 1))
+
+(defun setup-global-keys ()
+  (global-set-key (kbd "C-M-b") 'ibuffer)
+  (global-set-key (kbd "´") 'kill-buffer)
+  (global-set-key (kbd "C-M-y") 'reverse-transpose-sexps)
+  (global-set-key "\C-x\ \C-r" 'recentf-open-files)
+  (global-set-key (kbd "M-x") 'smex)
+  (global-set-key (kbd "M-X") 'smex-major-mode-commands)
+  ;; This is your old M-x.
+  (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command))
+
+(setup-global-keys)
+
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 (add-hook 'prog-mode-hook #'whitespace-mode)
+(add-hook 'prog-mode-hook #'autopair-mode)
 
 (setup-input-decode-map)
 
@@ -96,7 +111,23 @@
 
 (setq recentf-max-menu-items 25)
 (setq recentf-max-saved-items 25)
-(global-set-key "\C-x\ \C-r" 'recentf-open-files)
+
+;; Restclient settings
+
+(use-package json-mode
+  :ensure t)
+
+(use-package restclient
+  :ensure t
+  :defer t
+  :mode (("\\.http\\'" . restclient-mode))
+  :bind (:map restclient-mode-map
+              ("C-c C-f" . json-mode-beautify)))
+
+(defun restclient-mappings ()
+  (define-key evil-normal-state-map (kbd "§") #'restclient-http-send-current))
+
+(add-hook 'restclient-mode-hook #'restclient-mappings)
 
 ;; Clojure settings
 
