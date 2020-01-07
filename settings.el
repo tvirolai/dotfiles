@@ -125,19 +125,19 @@
               ("C-c C-f" . json-mode-beautify)))
 
 (defun restclient-mappings ()
-  (define-key evil-normal-state-map (kbd "§") #'restclient-http-send-current))
+  (define-key evil-normal-state-map (kbd "§") 'restclient-http-send-current))
 
-(add-hook 'restclient-mode-hook #'restclient-mappings)
+(add-hook 'restclient-mode-hook 'restclient-mappings)
 
 ;; Clojure settings
 
 (defun clojure-mappings ()
-  (define-key evil-normal-state-map (kbd "°") #'cider-eval-buffer)
-  (define-key evil-normal-state-map (kbd "M-§") #'cider-eval-buffer)
-  (define-key evil-normal-state-map (kbd "§") #'cider-eval-defun-at-point)
-  (define-key evil-normal-state-map (kbd "Ö") #'cider-find-var)
-  (define-key evil-normal-state-map (kbd "q") #'cider-popup-buffer-quit)
-  (define-key evil-normal-state-map (kbd "K") #'cider-doc))
+  (define-key evil-normal-state-map (kbd "°") 'cider-eval-buffer)
+  (define-key evil-normal-state-map (kbd "M-§") 'cider-eval-buffer)
+  (define-key evil-normal-state-map (kbd "§") 'cider-eval-defun-at-point)
+  (define-key evil-normal-state-map (kbd "Ö") 'cider-find-var)
+  (define-key evil-normal-state-map (kbd "q") 'cider-popup-buffer-quit)
+  (define-key evil-normal-state-map (kbd "K") 'cider-doc))
 
 (add-hook 'clojure-mode-hook #'paredit-mode)
 (add-hook 'clojure-mode-hook #'subword-mode)
@@ -146,26 +146,46 @@
 (add-hook 'clojure-mode-hook #'flycheck-mode)
 (add-hook 'clojure-mode-hook #'clojure-mappings)
 
+;; Common Lisp settings
+
+(defun clisp-mappings ()
+  (define-key evil-normal-state-map (kbd "°") 'slime-eval-buffer)
+  (define-key evil-normal-state-map (kbd "M-§") 'slime-eval-buffer)
+  (define-key evil-normal-state-map (kbd "§") 'slime-eval-defun))
+
+(add-hook 'lisp-mode-hook #'aggressive-indent-mode)
+(add-hook 'lisp-mode-hook #'linum-mode)
+(add-hook 'lisp-mode-hook #'paredit-mode)
+(add-hook 'lisp-mode-hook #'flycheck-mode)
+(add-hook 'lisp-mode-hook #'clisp-mappings)
+
 ;; Emacs Lisp settings
 
 (defun elisp-mappings ()
-  (define-key evil-normal-state-map (kbd "°") #'eval-buffer)
-  (define-key evil-normal-state-map (kbd "M-§") #'eval-buffer)
-  (define-key evil-normal-state-map (kbd "§") #'eval-defun))
-
-(defun clisp-mappings ()
-  (define-key evil-normal-state-map (kbd "°") #'slime-eval-buffer)
-  (define-key evil-normal-state-map (kbd "M-§") #'slime-eval-buffer)
-  (define-key evil-normal-state-map (kbd "§") #'slime-eval-defun))
-
-(add-hook 'lisp-mode-hook #'aggressive-indent-mode)
-(add-hook 'lisp-mode-hook #'paredit-mode)
-(add-hook 'lisp-mode-hook #'clisp-mappings)
+  (define-key evil-normal-state-map (kbd "°") 'eval-buffer)
+  (define-key evil-normal-state-map (kbd "M-§") 'eval-buffer)
+  (define-key evil-normal-state-map (kbd "§") 'eval-defun))
 
 (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
 (add-hook 'emacs-lisp-mode-hook #'paredit-mode)
 (add-hook 'emacs-lisp-mode-hook #'flycheck-mode)
 (add-hook 'emacs-lisp-mode-hook #'elisp-mappings)
+
+;; Rust mappings
+
+(defun rust-mappings ()
+  (define-key evil-normal-state-map (kbd "Ö") 'racer-find-definition))
+
+
+(add-hook 'rust-mode-hook #'racer-mode)
+(add-hook 'rust-mode-hook #'rust-mappings)
+(add-hook 'racer-mode-hook #'eldoc-mode)
+(add-hook 'racer-mode-hook #'company-mode)
+(require 'rust-mode)
+(define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
+(setq company-tooltip-align-annotations t)
+
+;;
 
 (defun kill-magit-diff-buffer-in-current-repo (&rest _)
   "Delete the magit-diff buffer related to the current repo"
