@@ -146,6 +146,16 @@
 (add-hook 'clojure-mode-hook #'flycheck-mode)
 (add-hook 'clojure-mode-hook #'clojure-mappings)
 
+;; Haskell settings
+
+(defun haskell-mappings ()
+  (define-key evil-normal-state-map (kbd "°") 'haskell-interactive-bring)
+  (define-key evil-normal-state-map (kbd "§") 'haskell-process-load-or-reload))
+
+(add-hook 'haskell-mode-hook #'haskell-indent-mode)
+(add-hook 'haskell-mode-hook #'interactive-haskell-mode)
+(add-hook 'haskell-mode-hook #'haskell-mappings)
+
 ;; Common Lisp settings
 
 (defun clisp-mappings ()
