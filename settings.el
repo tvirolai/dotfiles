@@ -195,6 +195,11 @@
 (define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
 (setq company-tooltip-align-annotations t)
 
+;; Python
+
+;; (add-hook 'python-mode-hook #'flycheck-mode)
+(add-hook 'python-mode-hook #'linum-mode)
+
 ;;
 
 (defun kill-magit-diff-buffer-in-current-repo (&rest _)
@@ -254,3 +259,10 @@
                   week))
       (message "%s" file)
       (delete-file file))))
+
+;; Treat Emacs symbol as word in Evil mode
+
+(with-eval-after-load 'evil
+  (defalias #'forward-evil-word #'forward-evil-symbol)
+  ;; make evil-search-word look for symbol rather than word boundaries
+  (setq-default evil-symbol-word-search t))
