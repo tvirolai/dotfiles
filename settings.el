@@ -186,7 +186,6 @@
 (defun rust-mappings ()
   (define-key evil-normal-state-map (kbd "Ö") 'racer-find-definition))
 
-
 (add-hook 'rust-mode-hook #'racer-mode)
 (add-hook 'rust-mode-hook #'rust-mappings)
 (add-hook 'racer-mode-hook #'eldoc-mode)
@@ -197,8 +196,23 @@
 
 ;; Python
 
-;; (add-hook 'python-mode-hook #'flycheck-mode)
+(add-hook 'python-mode-hook #'flycheck-mode)
 (add-hook 'python-mode-hook #'linum-mode)
+
+;; ReasonML
+
+;; if you want to change prefix for lsp-mode keybindings.
+(setq lsp-keymap-prefix "s-l")
+
+(require 'lsp-mode)
+(add-hook 'reason-mode-hook #'lsp)
+
+(lsp-register-client
+ (make-lsp-client :new-connection (lsp-stdio-connection "/usr/local/bin/reason-language-server")
+                  :major-modes '(reason-mode)
+                  :notification-handlers (ht ("client/registerCapability" 'ignore))
+                  :priority 1
+                  :server-id 'reason-ls))
 
 ;;
 
